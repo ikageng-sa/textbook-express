@@ -8,6 +8,13 @@ use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:view permission', ['only' => ['index', 'search', 'show']]);
+        $this->middleware('permission:create permission', ['only' => ['create', 'store']]);
+        $this->middleware('permission:update permission', ['only' => ['update', 'updateBookCover', 'edit']]);
+        $this->middleware('permission:delete permission', ['only' => 'destroy']);
+    }
     public function index()
     {
         $permissions = Permission::all();

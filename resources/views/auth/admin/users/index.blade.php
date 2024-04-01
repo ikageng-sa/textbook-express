@@ -55,7 +55,12 @@
                         <td>{{ ucfirst($user->status) ?? '-' }}</td>
                         <td>{{ $user->created_at ?? '-' }}</td>
                         <td class="d-flex gap-2">
-                            <a href="{{ route('admin.users.edit', ['user' => $user->id]) }}" class="btn btn-sm btn-secondary"><span class="bi bi-card-checklist"></span></a>
+                        @if (auth()->user()->hasRole('super-admin'))
+                            <a href="{{ route('admin.users.edit', ['user' => $user->id]) }}" class="btn btn-sm btn-secondary"><span class="bi bi-pen"></span></a>
+                        @elseif (auth()->user()->id === $user->id || (auth()->user()->hasRole('admin') && !$user->hasRole('admin')))
+                            <a href="{{ route('admin.users.edit', ['user' => $user->id]) }}" class="btn btn-sm btn-secondary"><span class="bi bi-pen"></span></a>
+                        @endif
+
                         </td>
                     </tr>
                     @empty

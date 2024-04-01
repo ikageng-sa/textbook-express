@@ -137,7 +137,7 @@
                             <li class="nav-item">
                                 <x-nav-link route="sell">Sell</x-nav-link>
                             </li>
-                            @role(['admin'])
+                            @role(['admin', 'super-admin'])
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Admin</a>
                                 <ul class="dropdown-menu">
