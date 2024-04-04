@@ -82,9 +82,10 @@ Route::middleware('auth')->prefix('/profile')->group(function() {
 
     Route::resource('address-book', AddressBookController::class)
         ->name('index', 'general.profile.addresses.index')
+        ->name('create', 'general.profile.addresses.create')
         ->name('update', 'general.profile.addresses.update')
         ->name('store', 'general.profile.addresses.store')
-        ->except(['create', 'edit', 'show']);
+        ->except(['edit', 'show']);
 });
 
 
