@@ -141,18 +141,21 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Admin</a>
                                 <ul class="dropdown-menu">
-                                    @role(['super-admin'])
+                                    @can('view role')
                                     <li class="dropdown-item">
                                         <a href="{{ route('admin.roles.index') }}" class="nav-link">Roles</a>
                                     </li>
-                                    @endrole
-
+                                    @endcan
+                                    @can('view user')
                                     <li class="dropdown-item">
                                         <a href="{{ route('admin.users.index') }}" class="nav-link">Users</a>
                                     </li>
+                                    @endcan
+                                    @can('view book')
                                     <li class="dropdown-item">
                                         <a href="{{ route('admin.books.index') }}" class="nav-link">Books</a>
                                     </li>
+                                    @endcan
                                 </ul>
                             </li>
                             @endrole

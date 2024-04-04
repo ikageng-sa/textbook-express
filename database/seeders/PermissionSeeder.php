@@ -22,9 +22,11 @@ class PermissionSeeder extends Seeder
             'create permission',
             'update permission',
             'view permission',
+            'delete permission',
             'create book',
             'update book',
             'view book',
+            'delete book',
             'create user',
             'update user',
             'view user'

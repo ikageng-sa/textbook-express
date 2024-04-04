@@ -21,7 +21,9 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             Permissions
+            @can('create permission')
             <a href="{{ route('admin.permissions.create') }}" class="btn btn-sm btn-success">Add Permission <span class="bi bi-plus"></span></a>
+            @endcan
         </div>
         <div class="card-body">
             @session('status')
@@ -43,8 +45,12 @@
                         <th scope="row">{{ $n }}</th>
                         <td>{{ ucfirst($permission->name) }}</td>
                         <td class="d-flex gap-2">
+                            @can('update permission')
                             <a href="{{ route('admin.permissions.edit', ['permission' => $permission->id]) }}" class="btn btn-sm btn-info"><span class="bi bi-pen"></span></a>
+                            @endcan
+                            @can('delete permission')
                             <a href="{{ route('admin.permissions.destroy', ['id' => $permission->id]) }}" class="btn btn-sm btn-danger"><span class="bi bi-trash"></span></a>
+                            @endcan
                         </td>
                     </tr>
                     @empty

@@ -15,15 +15,21 @@
                     </div>
                 </form>
             </div> -->
+            @can('view permission')
             <a href="{{ route('admin.permissions.index') }}" class="btn btn-info">Permissions</a>
+            @endcan
+            @can('view user')
             <a href="{{ route('admin.users.index') }}" class="btn btn-warning">Users</a>
+            @endcan
             
         </div>
     </div>
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             Roles
+            @can('create role')
             <a href="{{ route('admin.roles.create') }}" class="btn btn-sm btn-success">Add role <span class="bi bi-plus"></span></a>
+            @endcan
         </div>
         <div class="card-body">
             @session('status')
@@ -45,9 +51,13 @@
                         <th scope="row">{{ $n }}</th>
                         <td>{{ ucfirst($role->name) }}</td>
                         <td class="d-flex gap-2">
-                            @if($role->name !== 'super-admin')
+                            @can('update role permissions')
                             <a href="{{ route('admin.roles.manage', ['id' => $role->id]) }}" class="btn btn-sm btn-secondary"><span class="bi bi-card-checklist"></span></a>
+                            @endcan
+                            @can('update role')
                             <a href="{{ route('admin.roles.edit', ['role' => $role->id]) }}" class="btn btn-sm btn-info"><span class="bi bi-pen"></span></a>
+                            @endcan
+                            @can('delete role')
                             <a href="{{ route('admin.roles.destroy', ['id' => $role->id]) }}" class="btn btn-sm btn-danger"><span class="bi bi-trash"></span></a>
                             @endif
                         </td>

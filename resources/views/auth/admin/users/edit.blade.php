@@ -15,7 +15,7 @@
                     </a>
                 </div>
                 <div class="card-body">
-                @if($user->name !== auth()->user()->name && auth()->user()->hasRole('super-admin'))
+                @can('update user role')
                     <form action="{{ route('admin.users.update', ['user' => $user->id]) }}" method="POST">
                         @csrf
                         @method('PUT')
@@ -49,7 +49,7 @@
                     <span class="badge bg-primary">user</span>
                     @endforelse
                 </div>
-                @endif
+                @endcan
                 </div>
             </div>
         </div>

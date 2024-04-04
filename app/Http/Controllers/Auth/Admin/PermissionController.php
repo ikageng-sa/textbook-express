@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class PermissionController extends Controller
 {
@@ -60,6 +61,10 @@ class PermissionController extends Controller
         Permission::create([
             'name' => $request->name,
         ]);
+
+        // Sync all roles with the super admin
+        $role = Role::findByName('super-admin');
+        $role->syncPermissions(Permission::all());
 
         return redirect()->back()->with('status', 'Permission created successfully');
     }
