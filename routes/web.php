@@ -58,7 +58,7 @@ Route::middleware('isAdmin')->prefix('admin')->group(function() {
         ->name('store', 'admin.books.store')
         ->name('update', 'admin.books.updateDetails')
         ->except(['show']);
-    Route::put('/books/{book}', [AdminBookController::class, 'updateBookCover'])->name('admin.books.updateCover');
+    Route::put('/books/{book}/update-cover', [AdminBookController::class, 'updateBookCover'])->name('admin.books.updateCover');
 
 
     // Admin UserController

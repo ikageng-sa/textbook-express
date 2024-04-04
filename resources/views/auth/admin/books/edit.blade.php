@@ -11,12 +11,13 @@
                 <div class="card-body">
                     <form action="{{ route('admin.books.updateCover', ['book' => $book->id]) }}" method="post" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         @session('coverStatus')
                         <span class="text-success">{{ session('coverStatus') }}</span>
                         @endsession
                         <div class="input-group">
                             <input class="form-control form-control-sm" name="cover" type="file">
-                            <x-button class="outline-success btn-sm input-group-text">Save</x-button>
+                            <x-button class="outline-success btn-sm input-group-text">Update</x-button>
                             <x-input-error name="cover" :message="$errors->get('cover')" />
                         </div>
                     </form>
@@ -31,7 +32,7 @@
                     {{ $book->title }} book details
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('admin.books.updateDetails', ['book' => $book->id]) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('admin.books.updateDetails', ['book' => $book->id]) }}" method="post">
                         @csrf
                         @method('PUT')                       
                         @session('detailsStatus')
