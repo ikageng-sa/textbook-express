@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth\General\Profile;
+namespace App\Http\Controllers\General\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -13,7 +13,7 @@ class AccountController extends Controller
     {
         $user = auth()->user();
 
-        return view('auth.general.profile.account', [
+        return view('general.profile.account', [
             'user' => $user,
         ]);
     }

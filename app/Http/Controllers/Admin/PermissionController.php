@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth\Admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -19,7 +19,7 @@ class PermissionController extends Controller
     public function index()
     {
         $permissions = Permission::all();
-        return view('auth.admin.permissions.index', [
+        return view('admin.permissions.index', [
             'permissions' => $permissions,
         ]);
     }
@@ -27,13 +27,13 @@ class PermissionController extends Controller
     public function create()
     {
 
-        return view('auth.admin.permissions.create');
+        return view('admin.permissions.create');
     }
 
     public function edit(Permission $permission)
     {
 
-        return view('auth.admin.permissions.edit', [
+        return view('admin.permissions.edit', [
             'permission' => $permission,
         ]);
     }

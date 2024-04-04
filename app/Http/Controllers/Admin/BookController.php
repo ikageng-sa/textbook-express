@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Auth\Admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookCoverRequest;
 use App\Http\Requests\UpdateBookDetailsRequest;
-use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
@@ -36,7 +33,7 @@ class BookController extends Controller
             ->orWhereNull('books.cover')
             ->get();
 
-        return view('auth.admin.books.index', [
+        return view('admin.books.index', [
             'pageTitle' => $pageTitle,
             'books' => $books,
         ]);
@@ -44,7 +41,7 @@ class BookController extends Controller
 
     public function create() {
 
-        return view('auth.admin.books.create');
+        return view('admin.books.create');
     }
 
     public function store(StoreBookRequest $request)
@@ -80,7 +77,7 @@ class BookController extends Controller
             ->whereAny(['title', 'category', 'publisher', 'author', 'isbn'], 'like', "%$query%")
             ->get();
 
-        return view('auth.admin.books.index', [
+        return view('admin.books.index', [
             'pageTitle' => $pageTitle,
             'books' => $books,
             'query' => $query,
@@ -89,7 +86,7 @@ class BookController extends Controller
 
     public function edit(Book $book)
     {
-        return view('auth.admin.books.edit', [
+        return view('admin.books.edit', [
             'book' => $book,
         ]);
     }

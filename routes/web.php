@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\Auth\Admin\BookController as AdminBookController;
-use App\Http\Controllers\Auth\Admin\PermissionController;
-use App\Http\Controllers\Auth\Admin\RoleController;
-use App\Http\Controllers\Auth\Admin\UserController as AdminUserController;
-use App\Http\Controllers\Auth\General\Profile\AccountController;
-use App\Http\Controllers\Auth\General\Profile\AddressBookController;
-use App\Http\Controllers\Auth\General\ProfileController;
+use App\Http\Controllers\Admin\BookController as AdminBookController;
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\General\Profile\AccountController;
+use App\Http\Controllers\General\Profile\AddressBookController;
+use App\Http\Controllers\General\ProfileController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SalesListingController;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth\General\Profile;
+namespace App\Http\Controllers\General\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -10,7 +10,7 @@ class AddressBookController extends Controller
 {
     public function index() {
 
-        return view('auth.general.profile.addresses');
+        return view('general.profile.addresses');
     }
 
     public function store(Request $request)

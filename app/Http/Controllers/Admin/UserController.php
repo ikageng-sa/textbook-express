@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth\Admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -23,7 +23,7 @@ class UserController extends Controller
         $pageTitle = 'Users';
         $users = User::all(['id', 'name', 'email', 'email_verified_at', 'status', 'created_at']);
 
-        return view('auth.admin.users.index', [
+        return view('admin.users.index', [
             'pageTitle' => $pageTitle,
             'users' => $users,
         ]);
@@ -34,7 +34,7 @@ class UserController extends Controller
         $roles = Role::pluck('name', 'name')->all();
         $userRoles = $user->roles()->pluck('name', 'name')->all();
 
-        return view('auth.admin.users.edit', [
+        return view('admin.users.edit', [
             'roles' => $roles,
             'user' => $user,
             'userRoles' => $userRoles,
@@ -62,7 +62,7 @@ class UserController extends Controller
         $users = User::whereAny(['name', 'email', 'status'], 'like', "%$query%")
             ->get();
 
-        return view('auth.admin.users.index', [
+        return view('admin.users.index', [
             'pageTitle' => $pageTitle,
             'users' => $users,
             'query' => $query,

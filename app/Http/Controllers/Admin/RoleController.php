@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth\Admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -22,7 +22,7 @@ class RoleController extends Controller
         $roles = Role::all();
         $userRoles = auth()->user()->getRoleNames()->all();
         
-        return view('auth.admin.roles.index', [
+        return view('admin.roles.index', [
             'roles' => $roles,
             'userRoles' => $userRoles,
         ]);
@@ -31,13 +31,13 @@ class RoleController extends Controller
     public function create()
     {
 
-        return view('auth.admin.roles.create');
+        return view('admin.roles.create');
     }
 
     public function edit(Role $role)
     {
 
-        return view('auth.admin.roles.edit', [
+        return view('admin.roles.edit', [
             'role' => $role,
         ]);
     }
@@ -88,7 +88,7 @@ class RoleController extends Controller
             ->all();
 
 
-        return view('auth.admin.roles.manage-permissions', [
+        return view('admin.roles.manage-permissions', [
             'role' => $role,
             'permissions' => $permissions,
             'rolePermissions' => $rolePermissions,
