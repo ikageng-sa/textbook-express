@@ -87,17 +87,19 @@ Route::middleware('auth')->prefix('/profile')->group(function() {
 });
 
 
-Route::middleware('guest')->get('/', function () {
-    return view('welcome');
-})->name('welcome');
-
+Route::middleware('guest')->group(function() {
+    Route::get('/', function () {
+        return view('welcome');
+    })->name('welcome');
+    Route::get('/start', function() {
+        return view('start');
+    })->name('start');
+});
 
 
 // HomeController
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/start', function() {
-    return view('start');
-})->name('start');
+
 
 Route::get('/sell-a-book', [HomeController::class, 'sell'])->name('sell');
 
