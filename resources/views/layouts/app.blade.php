@@ -124,6 +124,11 @@
                         </div>
                     </form>
                 </div>
+                @if (Route::has('login') && Route::has('register'))
+                <div class="ms-5 mb-2">
+                    <a href="{{ route('start') }}" class="btn btn-success">Start Now</a>
+                </div>
+                @endif
                 @endguest
                 @auth
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navtoggle" aria-controls="navtoggle" aria-expanded="false" aria-label="Toggle navigation">

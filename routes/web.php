@@ -95,6 +95,10 @@ Route::middleware('guest')->get('/', function () {
 
 // HomeController
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/start', function() {
+    return view('start');
+})->name('start');
+
 Route::get('/sell-a-book', [HomeController::class, 'sell'])->name('sell');
 
 Route::get('/new-book', [BookController::class, 'create'])->name('book.create');
