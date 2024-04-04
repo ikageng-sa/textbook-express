@@ -27,7 +27,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><button class="dropdown-item" type="button">Edit</button></li>
-                                <li><button class="dropdown-item" type="button">Delete</button></li>
+                                <li><button class="dropdown-item">Delete</button></li>
                             </ul>
                         </div>
                     </div>

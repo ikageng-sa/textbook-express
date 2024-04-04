@@ -15,7 +15,7 @@ class AddressBookController extends Controller
 
     public function store(Request $request)
     {
-
+        dd($request);
     }
 
     public function update(Request $request, User $user)
