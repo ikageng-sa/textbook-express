@@ -18,10 +18,10 @@ This project was initially developed as a school project, aiming to provide a so
 
 2. **Install Dependencies:**
     - Navigate to the project directory and install the required dependencies using Composer:
-    ```
-    cd textbook-express
-    composer install
-    ```
+        ```
+        cd textbook-express
+        composer install
+        ```
 
 3. **Create Environment File:**
     - Create a .env file in the project root directory. They can duplicate the .env.example file and rename it:
