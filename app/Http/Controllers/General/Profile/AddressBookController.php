@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\General\Profile;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreAddressRequest;
 use App\Models\Address;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,8 +13,15 @@ class AddressBookController extends Controller
 {
     public function index() 
     {
+        $addresses = Address::select(['addresses.id', 'addresses.name', 'addresses.street_address as street', 'addresses.city', 'provinces.name as province', 'addresses.postal_code as code', 'addresses.is_primary'])
+            ->join('provinces', 'addresses.province_id', '=', 'provinces.id')
+            ->where(['user_id' => auth()->user()->id])
+            ->get();
+        // dd($addresses);
 
-        return view('general.profile.addresses.index');
+        return view('general.profile.addresses.index', [
+            'addresses' => $addresses,
+        ]);
     }
 
     public function create()
@@ -25,33 +33,69 @@ class AddressBookController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function edit(Address $address)
     {
-        $request->validate([
-            // 'name' => 'required|string',
-            'street_address' => 'required|string',
-            'city' => 'required|string',
-            'province_id' => 'required|string',
-            'is_primary' => 'nullable',
+        $provinces = DB::table('provinces')->get();
+
+        return view('general.profile.addresses.edit', [
+            'provinces' => $provinces,
+            'address' => $address,
         ]);
+    }
+
+
+    public function store(StoreAddressRequest $request)
+    {
+
+        // Check if any address is set to primary and unset if true
+        $this->validatePrimary($request);
 
         Address::create([
-            // 'name' => $request->name,
             'user_id' => auth()->user()->id,
+            'name' => $request->name,
             'street_address' => $request->street_address,
             'city' => $request->city,
             'province_id' => $request->province_id,
+            'postal_code' => $request->postal_code,
             'is_primary' => ($request->is_primary) ? true : false,
         ]);
+
+        return redirect()->back()->with('status', 'Address was saved successfully');
     }
 
-    public function update(Request $request, User $user)
+    public function update(StoreAddressRequest $request, Address $address)
     {
 
+        $this->validatePrimary($request);
+
+        $address->update([
+            'user_id' => auth()->user()->id,
+            'name' => $request->name,
+            'street_address' => $request->street_address,
+            'city' => $request->city,
+            'province_id' => $request->province_id,
+            'postal_code' => $request->postal_code,
+            'is_primary' => ($request->is_primary) ? true : false,
+        ]);
+
+        return redirect()->back()->with('status', 'Address was updated successfully');
     }
 
-    public function destroy($id)
+    public function destroy(Address $address)
     {
+        $address->delete();
 
+        return redirect()->back()->with('status', 'Address was deleted successfully');
+    }
+
+    private function validatePrimary($request) {
+        if($request->is_primary) {
+            $addresses = Address::where('user_id', '=', auth()->user()->id)->get();
+            foreach($addresses as $address) {
+                if($address->is_primary) {
+                    $address->update(['is_primary' => false]);
+                }
+            }
+        }
     }
 }

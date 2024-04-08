@@ -14,6 +14,7 @@ class Address extends Model
         'street_address',
         'city',
         'province_id',
+        'postal_code',
         'is_primary',
         'user_id',
     ];

@@ -71,7 +71,7 @@
                             <div class="row">
                                 <div class="mb-3">
                                     <input type="checkbox" name="is_primary" class="" autocomplete="off" />
-                                    <x-input-label for="is_primary">{{ __('Make this my primary address') }}</x-input-label>
+                                    <x-input-label for="is_primary">Make this my primary address</x-input-label>
                                 </div>
                             </div>
                             <div class="row">

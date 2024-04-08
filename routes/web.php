@@ -71,6 +71,17 @@ Route::middleware('isAdmin')->prefix('admin')->group(function() {
 );
 
 
+
+/*
+| -------------------------------------
+| General routes
+| -------------------------------------
+|
+| These are routes accessible to all 
+| authenticated users
+|
+| -------------------------------------
+*/
 Route::middleware('auth')->prefix('/profile')->group(function() {
     Route::get('/', [ProfileController::class, 'index'])->name('general.profile.index');
 
@@ -80,12 +91,15 @@ Route::middleware('auth')->prefix('/profile')->group(function() {
         ->except(['create', 'store', 'edit', 'show', 'destroy']);
     Route::get('/profile/account/password-reset', [AccountController::class, 'showResetForm'])->name('general.account.password.reset');
 
-    Route::resource('address-book', AddressBookController::class)
+    Route::resource('addresses', AddressBookController::class)
         ->name('index', 'general.profile.addresses.index')
         ->name('create', 'general.profile.addresses.create')
         ->name('update', 'general.profile.addresses.update')
         ->name('store', 'general.profile.addresses.store')
-        ->except(['edit', 'show']);
+        ->name('edit', 'general.profile.addresses.edit')
+        ->except(['show']);
+    Route::get('profile/addresses/{address}/delete', [AddressBookController::class, 'destroy'])
+        ->name('general.profile.addresses.destroy');
 });
 
 

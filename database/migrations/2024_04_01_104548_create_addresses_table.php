@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('name', 255);
             $table->string('street_address', 255);
             $table->string('city', 255);
             $table->foreignId('province_id')->constrained()->onDelete('cascade');
+            $table->string('postal_code', 4);
             $table->boolean('is_primary')->default(false);
             $table->timestamps();
         });
