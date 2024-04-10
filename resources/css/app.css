@@ -1,0 +1,19 @@
+/* DEFAULT STYLES */
+[data-initials]:before {
+    background: #099bdd;
+    color: white;
+    opacity: 1; 
+    content: attr(data-initials); 
+    display: inline-block; 
+    font-weight: bold; 
+    border-radius: 50%; 
+    vertical-align: middle; 
+    width: 35px; 
+    height: 35px; 
+    line-height: 35px; 
+    text-align: center; 
+}
+
+.fs-sm {
+    font-size: .75rem;
+}

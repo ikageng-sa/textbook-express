@@ -14,29 +14,11 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/sass/app.scss', 'resources/css/app.css', 'resources/js/app.js'])
 
     @livewireStyles
 
     <style>
-        [data-initials]:before {
-            background: #099bdd;
-            color: white;
-            opacity: 1; 
-            content: attr(data-initials); 
-            display: inline-block; 
-            font-weight: bold; 
-            border-radius: 50%; 
-            vertical-align: middle; 
-            width: 35px; 
-            height: 35px; 
-            line-height: 35px; 
-            text-align: center; 
-        }
-
-        .fs-sm {
-            font-size: .75rem;
-        }
 
         .dp-link-group ul {
             padding: 0;
@@ -75,20 +57,7 @@
         }
 
         .book-card {
-            display: flex;
-            flex-direction: row;
-        }
-
-        @media only screen and (max-width:576px) {
-            .book-card .card-image {
-                display: flex;
-                justify-content: center;
-            }
-
-            .book-card {
-                justify-content: center;
-                flex-direction: column !important;
-            }
+            
         }
     </style>
 </head>
