@@ -6,7 +6,7 @@
             <div wire:click="unsetBook()" class="btn btn-danger p-0 m-0 d-flex justify-content-center align-items-center" style="position:absolute;top:15px;right:15px;cursor:pointer;height:2.25rem;width:2rem;">
                 <span class="bi bi-x fs-2"></span>
             </div>
-            <img src="{{ $selectedBook->cover ?? '/images/no_image.png' }}" alt="" class="h-auto w-auto">
+            <img src="{{ isset($selectedBook->cover) ? '/'.$selectedBook->cover : '/images/no_image.png' }}" alt="" class="h-auto w-auto">
             <div class="card-body d-flex flex-column gap-0">
                 <h5 class="card-title my-0">{{ $selectedBook->title }}</h5>
                 <small class="fs-sm text-secondary">{{ $selectedBook->category }}</small>

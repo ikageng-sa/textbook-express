@@ -29,7 +29,7 @@ class SalesListingController extends Controller
             'seller' => auth()->user()->id,
         ]);
 
-        dd($bookListed);
+        return redirect()->to('/home')->with('status', 'Your book was successfully listed');
     }
 
     public function search()

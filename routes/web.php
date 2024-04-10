@@ -100,6 +100,12 @@ Route::middleware('auth')->prefix('/profile')->group(function() {
         ->except(['show']);
     Route::get('profile/addresses/{address}/delete', [AddressBookController::class, 'destroy'])
         ->name('general.profile.addresses.destroy');
+
+
+    Route::get('/sell-a-book', [HomeController::class, 'sell'])->name('sell');
+    Route::get('/new-book', [BookController::class, 'create'])->name('book.create');
+    Route::post('/book', [BookController::class, 'store'])->name('book.store');
+    Route::middleware('auth')->post('/list-book', [SalesListingController::class, 'store'])->name('salesListing.store');
 });
 
 
@@ -115,15 +121,7 @@ Route::middleware('guest')->group(function() {
 
 // HomeController
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-
-Route::get('/sell-a-book', [HomeController::class, 'sell'])->name('sell');
-
-Route::get('/new-book', [BookController::class, 'create'])->name('book.create');
-Route::post('/book', [BookController::class, 'store'])->name('book.store');
-Route::middleware('auth')->post('/list-book', [SalesListingController::class, 'store'])->name('salesListing.store');
 Route::get('/search', [SalesListingController::class, 'search'])->name('search');
-
 Route::get('book/show/{book}', [BookController::class, 'show'])->name('book.show');
 
 
