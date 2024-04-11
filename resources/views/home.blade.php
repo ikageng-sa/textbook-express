@@ -2,42 +2,48 @@
 
 @section('content')
 <div class="container">
-    <div class="card">
-        <div class="card-header">
-            My books
+
+    @if(count($myBooks) > 0)
+    <div class="row row-gap">
+        <div class="row">
+            <h1>My Books</h1>
         </div>
-        <div class="card-body">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">No.</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Status</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php $n = 0 @endphp
-                    @forelse($books as $book)
-                    @php $n++ @endphp
-                    <tr>
-                        <th scope="row">{{ $n }}</th>
-                        <td>{{ $book->title }}</td>
-                        <td>R {{ $book->price }}</td>
-                        <td>{{ $book->status }}</td>
-                        <td><a href="{{ route('book.show',['book' => $book->id]) }}" class="btn btn-sm btn-outline-success"><span class="bi bi-view-list"></span></a>
-                    </tr>
-                    @empty
-                    @endforelse
-                </tbody>
-            </table>
+        <div class="col-12 flex wrap content">
+            @forelse($myBooks as $book)
+            <div class="book _container">
+                <div class="_cover  faded flex justify-center align-end text-light bp-3" style="background-image: url( '/{{ $book->cover ? $book->cover : images/no_image }}');"></div>
+                <h3 class="title">{{ $book->title }}</h3>
+                <p class="sub-title truncate center-text">{{ $book->author ?? '' }}</p>
+                <p class="price right-text">R {{ $book->price }}</p>
+            </div>
+            @empty
+            @endforelse
         </div>
     </div>
+    @endif
+
+    @if(count($newBooks) > 3)
+    <div class="row">
+        <div class="row">
+            <h1>Newly Listed Books</h1>
+        </div>
+        <div class="col-12 flex wrap content">
+            @forelse($newBooks as $book)
+            @if($book->seller !== auth()->user()->id)
+            <div class="book _container">
+                <div class="_cover  faded flex justify-center align-end text-light bp-3" style="background-image: url( '/{{ $book->cover ? $book->cover : images/no_image }}');"></div>
+                <h3 class="title">{{ $book->title }}</h3>
+                <p class="sub-title truncate center-text">{{ $book->author ?? '' }}</p>
+                <p class="price right-text">R {{ $book->price }}</p>
+            </div>
+            @endif
+            @empty
+            @endforelse
+        </div>
+    </div>
+    @endif
+
 </div>
-
-
-
 
 
 @endsection
