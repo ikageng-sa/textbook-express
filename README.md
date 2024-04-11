@@ -52,6 +52,7 @@ This project was initially developed as a school project, aiming to provide a so
 
 8. **Access the Application:**
     - Once the server is running, users can access the Textbook Express application by opening a web browser and navigating to http://localhost:8000 (or a different port if specified).
+    - Default super user email: super.admin@example.com, password: password
 
 ## Built With
 
