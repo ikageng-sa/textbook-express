@@ -7,6 +7,8 @@ use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookCoverRequest;
 use App\Http\Requests\UpdateBookDetailsRequest;
 use App\Models\Book;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
@@ -66,16 +68,32 @@ class BookController extends Controller
         
     }
 
-    public function search()
+    public function search(Request $request)
     {
         $pageTitle = 'Search Results';
         $query = request('query') ?? '';
 
-        $books = Book::select('books.*', 'adder.name as adder', 'reviewer.name as reviewer')
+        $query = Book::select('books.*', 'adder.name as adder', 'reviewer.name as reviewer')
             ->leftJoin('users as reviewer', 'books.reviewed_by', '=', 'reviewer.id')
-            ->join('users as adder', 'books.added_by', '=', 'adder.id')
-            ->whereAny(['title', 'category', 'publisher', 'author', 'isbn'], 'like', "%$query%")
-            ->get();
+            ->join('users as adder', 'books.added_by', '=', 'adder.id');
+
+            if(isset($request->text) && $request->text !== null) {
+                $query->whereAny(['title', 'category', 'publisher', 'author', 'isbn'], 'like', "%$request->text%");
+            }
+
+            if(isset($request->reviewed) && $request->reviewed !== null) {
+                if($request->reviewed == 'true')
+                    $query->whereNotNull('books.reviewed_by');
+                elseif($request->reviewed == 'false')
+                    $query->whereNull('books.reviewed_by');
+            }
+
+            if(isset($request->added_by) && $request->added_by) {
+                $query->whereBetween('books.created_at', [$request->added_by, Carbon::now()]);
+            }
+
+            $books= $query->get();
+            session()->flashInput($request->input());
 
         return view('admin.books.index', [
             'pageTitle' => $pageTitle,
