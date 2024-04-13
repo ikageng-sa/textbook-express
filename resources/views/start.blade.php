@@ -1,10 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <main class="container">
+<main class="container">
 
-        <section class="row justify-content-center align-items-center" style="height:75vh;">
-            <div class="card border border-success-subtle col-sm-12 col-md-6 p-4 text-center">
+    <div class="row justify-content-center align-items-center" style="height:75vh;">
+        <div class="col-12">
+            <div class="cardc col-sm-12 col-md-6 p-4 text-center">
                 <h2 class="fs-4 fw-bold display-6">Welcome to Our Bookstore</h2>
                 <p class="lead fs-6">
                     Explore our collection by logging in or creating an account. Join us today to discover tailored literary delights.
@@ -14,9 +15,10 @@
                     <a href="{{ route('register') }}" class="btn btn-sm btn-success rounded col-5">{{ __('Register') }}</a>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
 
-    </main>
+</main>
 
 
 @endsection

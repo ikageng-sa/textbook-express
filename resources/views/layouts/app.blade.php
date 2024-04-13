@@ -20,7 +20,7 @@
     @livewireStyles
 
     <style>
-        
+
 
 
 
@@ -58,12 +58,12 @@
                             <button class="input-group-text btn btn-primary" type="submit" name="submit"><i class="bi bi-search"></i></button>
                         </div>
                     </form>
+                    @if (Route::has('login') && Route::has('register'))
+                    <div class="ms-sm-0 ms-lg-5 mb-2">
+                        <a href="{{ route('start') }}" class="btn btn-success">Start Now</a>
+                    </div>
+                    @endif
                 </div>
-                @if (Route::has('login') && Route::has('register'))
-                <div class="ms-5 mb-2">
-                    <a href="{{ route('start') }}" class="btn btn-success">Start Now</a>
-                </div>
-                @endif
                 @endguest
                 @auth
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navtoggle" aria-controls="navtoggle" aria-expanded="false" aria-label="Toggle navigation">

@@ -2,19 +2,19 @@
 
 @section('content')
 <div class="container">
-    <div class="row bm-3">
+    <div class="row mb-3">
         <h2>Advanced Search</h2>
-        <div class="col-12">
+        <div class="col-sm-12 col-md-8">
             <form action="{{ route('admin.users.search') }}" method="get">
-                <div class="row bm-3">
-                    <div class="col-4">
+                <div class="row mb-3">
+                    <div class="col-sm-12 col-md-6">
                         <div class="">
                             <input class="form-control form-control-sm" type="text" name="text" value="{{ old('text') }}" placeholder="Enter an email or name...">
                         </div>
                     </div>
                 </div>
-                <div class="row bm-3">
-                    <div class="col-sm-12 col-md-3">
+                <div class="row mb-3">
+                    <div class="col-sm-12 col-md-4">
                         <x-input-label for="">Status</x-input-label>
                         <select class="form-select form-select-sm" name="status">
                             <option value="">All</option>
@@ -23,7 +23,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-sm-12 col-md-3">
+                    <div class="col-sm-12 col-md-4">
                         <x-input-label for="">Email verified</x-input-label>
                         <select class="form-select form-select-sm" name="email_verified">
                             <option value="">All</option>
@@ -31,21 +31,20 @@
                             <option value="false" @if(old('email_verified') == 'false') selected @endif>False</option>
                         </select>
                     </div>
-                    <div class="col-sm-12 col-md-3">
+                    <div class="col-sm-12 col-md-4">
                         <x-input-label for="">Created by</x-input-label>
-                        <x-input-text type="date" name="created_by" value="2000/02/22" />
+                        <x-input-text type="date" name="created_by" />
                     </div>
-                    <div class="col-sm-12 col-md-3"></div>
                 </div>
-                <div class="row bm-3">
-                    <div class="col-sm-12 col-md-9 flex justify-end">
+                <div class="row mb-3">
+                    <div class="col-12 d-flex justify-content-end">
                         <x-button class="primary btn-sm col-sm-12 col-md-3 col-lg-2">Search</x-button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    <!-- <div class="row bm-3">
+    <!-- <div class="row mb-3">
         <h2>Actions</h2>
         <div class="col-12 d-flex gap-2">
             <a href="" class="btn btn-sm btn-success">New user <span class="bi bi-plus"></span></a>
