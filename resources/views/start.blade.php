@@ -4,8 +4,8 @@
 <main class="container">
 
     <div class="row justify-content-center align-items-center" style="height:75vh;">
-        <div class="col-12">
-            <div class="cardc col-sm-12 col-md-6 p-4 text-center">
+        <div class="col-12 d-flex justify-content-center">
+            <div class="card col-sm-12 col-md-6 p-4 text-center">
                 <h2 class="fs-4 fw-bold display-6">Welcome to Our Bookstore</h2>
                 <p class="lead fs-6">
                     Explore our collection by logging in or creating an account. Join us today to discover tailored literary delights.
