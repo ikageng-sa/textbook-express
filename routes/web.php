@@ -40,8 +40,7 @@ Route::middleware('isAdmin')->prefix('admin')->group(function() {
     ->name('edit', 'admin.roles.edit')
     ->name('update', 'admin.roles.update')
     ->name('store', 'admin.roles.store');
-    Route::get('roles/{id}/delete', [RoleController::class, 'destroy'])
-        ->name('admin.roles.destroy');
+    Route::get('roles/{id}/delete', [RoleController::class, 'destroy'])        ->name('admin.roles.destroy');
 
     //  Roles => Manage permissions
     Route::get('roles/{id}/manage-permission', [RoleController::class, 'managePermissions'])
