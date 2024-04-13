@@ -13,20 +13,24 @@ class AccountController extends Controller
     {
         $user = auth()->user();
 
-        return view('general.profile.account', [
+        return view('general.profile.account.index', [
             'user' => $user,
         ]);
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $account)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id],
-            'phone_number' => ['nullable', 'string', 'max:10', 'unique:users,phone_number,'.$user->id],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$account->id],
+            'phone_number' => ['nullable', 'string', 'max:10', 'unique:users,phone_number,'.$account->id],
         ]);
 
-        $user->update($request->all());
+        $account->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone_number' => $request->phone_number,
+        ]);
 
         return redirect()->back()->with('status', 'Account updated successfully');
     }
