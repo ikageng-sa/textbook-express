@@ -17,7 +17,7 @@
     <div class="row d-flex align-items-center flex-column my-5">
         <h1 class="w-auto mb-5 text-center">Your Account <i class="bi bi-person"></i></h1>
         <div class="col-sm-12 col-md-6 col-lg-4">
-            <form action="{{ route('general.profile.account.update', ['user' => auth()->user()->id]) }}" method="POST">
+            <form action="{{ route('general.profile.account.update', ['account' => auth()->user()->id]) }}" method="POST">
                 @csrf
                 @method('PUT')
                 @session('status')

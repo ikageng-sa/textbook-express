@@ -98,6 +98,11 @@ h3 {
     font-size: 0.87rem;
 }
 
+.subsequent-text {
+    font-weight: 300 !important;
+    font-size: 1.125rem;
+}
+
 .truncate {
     display: -webkit-box;
     max-width: 400px;

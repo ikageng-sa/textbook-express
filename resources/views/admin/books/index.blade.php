@@ -37,7 +37,6 @@
                                     <x-input-label for="">Added by</x-input-label>
                                     <x-input-text type="date" name="added_by" />
                                 </div>
-                                <div class="col-sm-12 col-md-3"></div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12 col-md-12 flex justify-end">
