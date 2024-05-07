@@ -3,6 +3,25 @@
 @section('content')
 <div class="container">
 
+    <div class="row">
+    <div class="col-sm-12 col-md-6 mb-3">
+        <div class="card p-3">
+            <div class="card-body">
+                <h1>Welcome Back {{ auth()->user()->name }}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 mb-3 text-center">
+        <h2>Suggestions</h2>
+        <div class="row">
+            <div class="col-12">
+                <a href="{{ route('search') }}" class="btn btn-dark"><span class="bi bi-search"></span>&nbsp;Search</a>
+                <a href="{{ route('sell') }}" class="btn btn-dark"><span class="bi bi-card-list"></span>&nbsp;History</a>
+                <a href="{{ route('sell') }}" class="btn btn-dark"><span class="bi bi-receipt"></span>&nbsp;Sell</a>
+            </div>
+        </div>
+    </div>
+
     @if(count($myBooks) > 0)
     <div class="row row-gap">
         <div class="row">

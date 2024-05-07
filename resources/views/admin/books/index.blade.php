@@ -2,22 +2,23 @@
 
 @section('content')
 <div class="container">
-    <div class="row bm-3">
-        <div class="col-sm-12 col-md-8 card">
-            <div class="row p-2">
-                <div class="card-body">
-                    <h2 class="bm-3">Advanced Search</h2>
-                    <div class="col-12">
-                        <form action="{{ route('admin.books.search') }}" method="get">
-                            <div class="row bm-3">
-                                <div class="col-4">
-                                    <div class="">
-                                        <input class="form-control form-control-sm" type="text" name="text" value="{{ old('text') }}" placeholder="Enter a title, isbn, author ...">
+    <div class="row mb-3">
+        <div class="col-sm-12 col-md-8">
+            <div class="card">
+                <div class="row p-2">
+                    <div class="card-body">
+                        <h2 class="mb-3">Advanced Search</h2>
+                        <div class="col-12">
+                            <form action="{{ route('admin.books.search') }}" method="get">
+                                <div class="row mb-3">
+                                    <div class="col-4">
+                                        <div class="">
+                                            <input class="form-control form-control-sm" type="text" name="text" value="{{ old('text') }}" placeholder="Enter a title, isbn, author ...">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row bm-3">
-                                <!-- <div class="col-sm-12 col-md-4">
+                                <div class="row mb-3">
+                                    <!-- <div class="col-sm-12 col-md-4">
                                     <x-input-label for="">Category</x-input-label>
                                     <select class="form-select form-select-sm" name="email_verified">
                                         <option value="">All</option>
@@ -25,32 +26,33 @@
                                         <option value="false" if(old('email_verified')=='false' ) selected endif>False</option>
                                     </select>
                                 </div> -->
-                                <div class="col-sm-12 col-md-4">
-                                    <x-input-label for="">Reviewed</x-input-label>
-                                    <select class="form-select form-select-sm" name="reviewed">
-                                        <option value="">All</option>
-                                        <option value="true" @if(old('reviewed')=='true' ) selected @endif>True</option>
-                                        <option value="false" @if(old('reviewed')=='false' ) selected @endif>False</option>
-                                    </select>
+                                    <div class="col-sm-12 col-md-4">
+                                        <x-input-label for="">Reviewed</x-input-label>
+                                        <select class="form-select form-select-sm" name="reviewed">
+                                            <option value="">All</option>
+                                            <option value="true" @if(old('reviewed')=='true' ) selected @endif>True</option>
+                                            <option value="false" @if(old('reviewed')=='false' ) selected @endif>False</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <x-input-label for="">Added by</x-input-label>
+                                        <x-input-text type="date" name="added_by" />
+                                    </div>
                                 </div>
-                                <div class="col-sm-12 col-md-4">
-                                    <x-input-label for="">Added by</x-input-label>
-                                    <x-input-text type="date" name="added_by" />
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 flex justify-end">
+                                        <x-button class="primary btn-sm col-sm-12 col-md-3 col-lg-2">Search</x-button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12 col-md-12 flex justify-end">
-                                    <x-button class="primary btn-sm col-sm-12 col-md-3 col-lg-2">Search</x-button>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-sm-12 col-md-4">
             <div class="row mb-3">
-                <h2 class="bm-3">Actions</h2>
+                <h2 class="mb-3">Actions</h2>
                 <div class="col-12 d-flex gap-2">
                     @can('create book')
                     <a href="{{ route('admin.books.create') }}" class="btn btn-success xp-3 yp-3">New Book <span class="bi bi-plus"></span></a>

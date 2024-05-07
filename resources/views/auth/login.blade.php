@@ -3,8 +3,8 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center">
-            <div class="card col-12">
+        <div class="col-12 d-flex justify-content-center">
+            <div class="card col-sm-12 col-md-6 col-sm-3">
                 <div class="card-body">
                     <h1 class="display-5 fs-4">{{ __('Login') }}</h1>
                     <p class="lead fs-6">Submit the form to access your account.</p>
