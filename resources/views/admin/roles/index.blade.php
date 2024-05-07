@@ -7,14 +7,6 @@
     </div>
     <div class="row mb-3">
         <div class="col-12 d-flex gap-2">
-            <!-- <div class="col-4">
-                <form class="" action="" method="get">
-                    <div class="input-group input-group-sm">
-                        <input class="form-control" type="text" name="query" value="{{ $query ?? '' }}" placeholder="Enter an email or name...">
-                        <button class="input-group-text btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
-                    </div>
-                </form>
-            </div> -->
             @can('view permission')
             <a href="{{ route('admin.permissions.index') }}" class="btn btn-info">Permissions</a>
             @endcan

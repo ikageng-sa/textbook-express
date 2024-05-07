@@ -18,6 +18,9 @@
     @vite(['resources/sass/app.scss', 'resources/css/app.css', 'resources/js/app.js'])
 
     <style>
+        a.book {
+            text-decoration: none;
+        }
     </style>
 </head>
 
@@ -101,7 +104,7 @@
                         dd($initials); */
 
                         $initials = '';
-                        $names = explode(' ', 'IkagengTladi');
+                        $names = explode(' ', auth()->user()->name);
                         if(count($names) > 1) {
                             $initials = strtoupper(substr($names[0], 0, 1).substr($names[1], 0, 1));
                         }else {
