@@ -62,12 +62,15 @@
 
             <table class="table col-12 table-borderless mt-5 mb-0">
                 <tr>
-                    <th class="text-start" scope="row">Price</th>
-                    <td class="text-center">R {{ $book->price }}</td>
+                    <th class="text-start" scope="row" style="background-color:transparent;">Price</th>
+                    <td class="text-center" style="background-color:transparent;">R {{ $book->price }}</td>
                 </tr>
             </table>
-            <div class="col-12 d-flex justify-content-end my-0">
-                <a href="#" class="btn btn-success col-6">Purchase</a>
+            <div class="col-12 ">
+                <form action="{{ route('checkout', ['book' => $book->id]) }}" method="POST" class="col-12 d-flex justify-content-end my-0">
+                    @csrf
+                    <button type="submit" class="btn btn-success col-6">Purchase</button>
+                </form>
             </div>
         </div>
     </div>

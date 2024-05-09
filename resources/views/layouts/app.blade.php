@@ -18,8 +18,30 @@
     @vite(['resources/sass/app.scss', 'resources/css/app.css', 'resources/js/app.js'])
 
     <style>
-        a.book {
+        a.book-container {
             text-decoration: none;
+        }
+
+        .book-container {
+            height: 16rem;
+            width: 8rem;
+        }
+
+        @media only screen and (min-height:768px) {
+            .book-container {
+                height: 30rem;
+                width: 15rem;
+            }
+        }
+
+        .book-container.book-cover {
+            height: 80%;
+            width: 100%;
+        }
+
+        .book-cover>img {
+            width: fit-content;
+            height: fit-content;
         }
     </style>
 </head>
@@ -106,13 +128,13 @@
                         $initials = '';
                         $names = explode(' ', auth()->user()->name);
                         if(count($names) > 1) {
-                            $initials = strtoupper(substr($names[0], 0, 1).substr($names[1], 0, 1));
+                        $initials = strtoupper(substr($names[0], 0, 1).substr($names[1], 0, 1));
                         }else {
-                            $names = implode(' ', $names);
-                            preg_match_all('#([A-Z]+)#', $names, $capitals);
-                            if (count($capitals[1]) >= 2) {
-                                $initials = mb_substr(implode('', $capitals[1]), 0, 2, 'UTF-8');
-                            }
+                        $names = implode(' ', $names);
+                        preg_match_all('#([A-Z]+)#', $names, $capitals);
+                        if (count($capitals[1]) >= 2) {
+                        $initials = mb_substr(implode('', $capitals[1]), 0, 2, 'UTF-8');
+                        }
                         }
                         @endphp
                         <a href="{{ route('general.profile.index') }}">
