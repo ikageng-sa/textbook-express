@@ -10,6 +10,7 @@ use App\Http\Controllers\General\ProfileController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SalesListingController;
+use App\Http\Controllers\StripeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -88,7 +89,7 @@ Route::middleware('auth')->prefix('/profile')->group(function() {
         ->name('index', 'general.profile.account.index')
         ->name('update', 'general.profile.account.update')
         ->except(['create', 'store', 'edit', 'show', 'destroy']);
-    Route::get('/profile/account/password-reset', [AccountController::class, 'showResetForm'])->name('general.account.password.reset');
+    Route::get('/account/password-reset', [AccountController::class, 'showResetForm'])->name('general.account.password.reset');
 
     Route::resource('addresses', AddressBookController::class)
         ->name('index', 'general.profile.addresses.index')
@@ -97,16 +98,24 @@ Route::middleware('auth')->prefix('/profile')->group(function() {
         ->name('store', 'general.profile.addresses.store')
         ->name('edit', 'general.profile.addresses.edit')
         ->except(['show']);
-    Route::get('profile/addresses/{address}/delete', [AddressBookController::class, 'destroy'])
+    Route::get('/addresses/{address}/delete', [AddressBookController::class, 'destroy'])
         ->name('general.profile.addresses.destroy');
 
+});
 
+Route::middleware('auth')->group(function() {
     Route::get('/sell-a-book', [HomeController::class, 'sell'])->name('sell');
     Route::get('/new-book', [BookController::class, 'create'])->name('book.create');
     Route::post('/book', [BookController::class, 'store'])->name('book.store');
     Route::middleware('auth')->post('/list-book', [SalesListingController::class, 'store'])->name('salesListing.store');
-});
 
+    Route::prefix('checkout')->group(function() {
+        Route::post('/{book}', [StripeController::class, 'checkout'])->name('checkout');
+        Route::get('/success/{transaction}', [StripeController::class, 'success'])->name('checkout.success');
+        Route::get('/cancel/{transaction}', [StripeController::class, 'cancel'])->name('checkout.cancel');
+        Route::get('/webhook', [StripeController::class, 'webhook'])->name('checkout.webhook');
+    });
+});
 
 Route::middleware('guest')->group(function() {
     Route::get('/', function () {
