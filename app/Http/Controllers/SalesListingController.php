@@ -35,17 +35,18 @@ class SalesListingController extends Controller
     public function search()
     {
         $query = request('query') ?? '';
+        $books = [];
 
-        $books = DB::table('sales_listings as sl')
-            ->select('b.id', 'b.title', 'b.author', 'b.isbn', 'b.description', 'b.edition', 'b.category', 'b.cover', 'sl.seller', 'sl.price', 'sl.condition', 'sl.status')
-            ->join('books as b', 'b.id', '=', 'sl.book_id')
-            ->whereAny(['b.title', 'b.category', 'b.publisher', 'b.author', 'b.isbn'], 'like', "%$query%")
-            ->get();
-
+        if (!$query == '') {
+            $books = DB::table('sales_listings as sl')
+                ->select('b.id', 'b.title', 'b.author', 'b.isbn', 'b.description', 'b.edition', 'b.category', 'b.cover', 'sl.seller', 'sl.price', 'sl.condition', 'sl.status')
+                ->join('books as b', 'b.id', '=', 'sl.book_id')
+                ->whereAny(['b.title', 'b.category', 'b.publisher', 'b.author', 'b.isbn'], 'like', "%$query%")
+                ->get();
+        }
         return view('search', [
             'books' => $books,
             'query' => $query,
         ]);
     }
-
 }
