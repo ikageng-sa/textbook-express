@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\OrderStatus;
+use App\Enums\TransactionStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('session')->unique()->nullable();
             $table->decimal('amount');
-            $table->string('status')->default(OrderStatus::UNPAID);
+            $table->string('status')->default(TransactionStatus::UNPAID);
             $table->timestamps();
         });
     }
