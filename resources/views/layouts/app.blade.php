@@ -24,25 +24,59 @@
 
         .book-container {
             height: 16rem;
-            width: 8rem;
+            width: 7rem;
+        }
+
+        .book-cover>img {
+            width: 100%;
+            height: 10rem;
+        }
+
+        .book-details>h3 {
+            font-size: .75rem;
         }
 
         @media only screen and (min-height:768px) {
             .book-container {
-                height: 30rem;
-                width: 15rem;
+                height: 25rem;
+                width: 12rem;
+            }
+
+            .book-cover>img {
+                height: 18rem;
+            }
+
+            .book-details {
+                padding-left: .75rem;
+                padding-right: .75rem;
+            }
+
+            .book-details>h3 {
+                font-size: 1rem;
             }
         }
 
-        .book-container.book-cover {
-            height: 80%;
+
+
+        .dropdown-datalist {
+            position: relative;
+        }
+        .datalist {
             width: 100%;
+            list-style: none;
+            position: absolute;
+            z-index: 99;
+
+            display: flex;
+            flex-direction: column;
+        }
+        .datalist-item {
+            width: 100%;
+            padding: .5rem 1rem;
         }
 
-        .book-cover>img {
-            width: fit-content;
-            height: fit-content;
-        }
+
+
     </style>
 </head>
 

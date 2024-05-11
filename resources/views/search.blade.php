@@ -17,7 +17,7 @@
 
 
     @if(count($books) !== 0)
-    <div class="row">
+    <div class="row row-gap">
         <div class="col-12 d-flex flex-wrap content">
             @foreach($books as $book)
             @if($book->seller !== auth()->user()->id)

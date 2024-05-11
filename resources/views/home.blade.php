@@ -27,7 +27,7 @@
         <div class="row">
             <h1>My Books</h1>
         </div>
-        <div class="col-12 d-flex flex-wrap content">
+        <div class="col-12 d-flex flex-wrap gap-3 row-gap-2 content">
             @forelse($myBooks as $book)
             <x-book route="#" :details="$book"/>
             @empty

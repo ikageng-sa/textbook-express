@@ -47,16 +47,12 @@
                 <tr>
                     <th scope="row">Author</th>
                     <td>{{ $book->author }}</td>
-                </tr>
+                </tr>s
                 <tr>
                     <th scope="row">Condition</th>
                     <td>
                         {{ ucfirst($book->condition) }}
                     </td>
-                </tr>
-                <tr>
-                    <th scope="row">Availability</th>
-                    <td>{{ ucfirst($book->status) }}</td>
                 </tr>
             </table>
 
