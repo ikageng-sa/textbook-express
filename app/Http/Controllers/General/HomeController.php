@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\General;
 
-use App\Enums\Conditions;
-use App\Models\Book;
+use App\Http\Controllers\Controller;
 use App\Models\SalesListing;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -40,17 +38,10 @@ class HomeController extends Controller
         ->last7Days('sales_listings.created_at')
         ->get();
 
-        return view('home', [
+        return view('general.home', [
             'myBooks' => $myBooks,
             'newBooks' => $newBooks,
         ]);
     }
 
-    public function sell() 
-    {
-        $conditions = array_column(Conditions::cases(), 'value');
-        return view('sell', [
-            'conditions' => $conditions,
-        ]);
-    }
 }

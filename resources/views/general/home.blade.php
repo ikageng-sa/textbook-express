@@ -15,9 +15,9 @@
         <h2>Suggestions</h2>
         <div class="row">
             <div class="col-12">
-                <a href="{{ route('search') }}" class="btn btn-dark"><span class="bi bi-search"></span>&nbsp;Search</a>
-                <a href="{{ route('sell') }}" class="btn btn-dark"><span class="bi bi-card-list"></span>&nbsp;History</a>
-                <a href="{{ route('sell') }}" class="btn btn-dark"><span class="bi bi-receipt"></span>&nbsp;Sell</a>
+                <a href="{{ route('general.book.search') }}" class="btn btn-dark"><span class="bi bi-search"></span>&nbsp;Search</a>
+                <a href="" class="btn btn-dark"><span class="bi bi-card-list"></span>&nbsp;History</a>
+                <a href="{{ route('general.book.show-sell-form') }}" class="btn btn-dark"><span class="bi bi-receipt"></span>&nbsp;Sell</a>
             </div>
         </div>
     </div>
@@ -27,7 +27,7 @@
         <div class="row">
             <h1>My Books</h1>
         </div>
-        <div class="col-12 d-flex flex-wrap gap-3 row-gap-2 content">
+        <div class="col-12 d-flex flex-wrap gap-2 row-gap-2 content">
             @forelse($myBooks as $book)
             <x-book route="#" :details="$book"/>
             @empty

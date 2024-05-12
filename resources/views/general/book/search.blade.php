@@ -5,7 +5,7 @@
 
     <div class="row justify-content-center">
         <div class="col-sm-12 col-md-8 col-lg-6">
-            <form class="mt-2" action="{{ route('search') }}" method="get">
+            <form class="mt-2" action="{{ route('general.book.search') }}" method="get">
                 <div class="input-group input-group mb-3">
                     <input class="form-control" type="text" name="query" value="{{ $query ?? '' }}" placeholder="Enter Title or ISBN...">
                     <button class="input-group-text btn btn-primary" type="submit" name="submit"><i class="bi bi-search"></i></button>
@@ -18,11 +18,9 @@
 
     @if(count($books) !== 0)
     <div class="row row-gap">
-        <div class="col-12 d-flex flex-wrap content">
+        <div class="col-12 d-flex flex-wrap gap-2 row-gap-2 content">
             @foreach($books as $book)
-            @if($book->seller !== auth()->user()->id)
-            <x-book route="{{ route('book.show', ['book' => $book->id]) }}" :details="$book" />
-            @endif
+            <x-book route="{{ route('general.book.show', ['book' => $book->id]) }}" :details="$book" />
             @endforeach
         </div>
     </div>

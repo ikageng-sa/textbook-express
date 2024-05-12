@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\General;
 
 use App\Enums\TransactionStatus;
-use App\Enums\SalesListingStatus;
 use App\Events\PurchaseSuccessful;
-use App\Models\Book;
+use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\SalesListing;
 use App\Models\Transaction;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;

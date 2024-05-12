@@ -47,7 +47,7 @@
                 <tr>
                     <th scope="row">Author</th>
                     <td>{{ $book->author }}</td>
-                </tr>s
+                </tr>
                 <tr>
                     <th scope="row">Condition</th>
                     <td>
@@ -63,7 +63,7 @@
                 </tr>
             </table>
             <div class="col-12 ">
-                <form action="{{ route('checkout', ['book' => $book->id]) }}" method="POST" class="col-12 d-flex justify-content-end my-0">
+                <form action="{{ route('checkout', ['book' => $book->slID]) }}" method="POST" class="col-12 d-flex justify-content-end my-0">
                     @csrf
                     <button type="submit" class="btn btn-success col-6">Purchase</button>
                 </form>
