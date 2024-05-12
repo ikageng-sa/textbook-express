@@ -14,6 +14,7 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('session')->unique()->nullable();
             $table->decimal('amount');
             $table->string('status')->default(TransactionStatus::UNPAID);
