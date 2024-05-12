@@ -17,67 +17,6 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/css/app.css', 'resources/js/app.js'])
 
-    <style>
-        a.book-container {
-            text-decoration: none;
-        }
-
-        .book-container {
-            height: 16rem;
-            width: 7rem;
-        }
-
-        .book-cover>img {
-            width: 100%;
-            height: 10rem;
-        }
-
-        .book-details>h3 {
-            font-size: .75rem;
-        }
-
-        @media only screen and (min-height:768px) {
-            .book-container {
-                height: 25rem;
-                width: 12rem;
-            }
-
-            .book-cover>img {
-                height: 18rem;
-            }
-
-            .book-details {
-                padding-left: .75rem;
-                padding-right: .75rem;
-            }
-
-            .book-details>h3 {
-                font-size: 1rem;
-            }
-        }
-
-
-
-        .dropdown-datalist {
-            position: relative;
-        }
-        .datalist {
-            width: 100%;
-            list-style: none;
-            position: absolute;
-            z-index: 99;
-
-            display: flex;
-            flex-direction: column;
-        }
-        .datalist-item {
-            width: 100%;
-            padding: .5rem 1rem;
-        }
-
-
-
-    </style>
 </head>
 
 <body>
@@ -105,7 +44,7 @@
                             <a class="nav-link" href="#">Contact</a>
                         </li>
                     </ul>
-                    <form class="mt-2" action="{{ route('search') }}" method="get">
+                    <form class="mt-2" action="{{ route('general.book.search') }}" method="get">
                         <div class="input-group input-group-sm mb-3">
                             <input class="form-control" type="text" name="query" value="{{ $query ?? '' }}" placeholder="Enter Title or ISBN...">
                             <button class="input-group-text btn btn-primary" type="submit" name="submit"><i class="bi bi-search"></i></button>
@@ -125,10 +64,10 @@
                 <div class="collapse navbar-collapse" id="navtoggle">
                     <ul class="navbar-nav mx-auto mb-2 mb-lg-0 col-md-6 d-flex justify-content-evenly">
                         <li class="nav-item">
-                            <x-nav-link route="home">Home</x-nav-link>
+                            <x-nav-link route="general.home">Home</x-nav-link>
                         </li>
                         <li class="nav-item">
-                            <x-nav-link route="sell">Sell</x-nav-link>
+                            <x-nav-link route="general.book.show-sell-form">Sell</x-nav-link>
                         </li>
                         @role(['admin', 'super-admin'])
                         <li class="nav-item dropdown">
