@@ -82,11 +82,13 @@ class BookController extends Controller
 
             if(auth()->user()) 
                 $books->where('seller', '!=', auth()->user()->id);
+
+            $books = $books->get();
                 
         }
 
         return view('general.book.search', [
-            'books' => $books->get(),
+            'books' => $books,
             'query' => $query,
         ]);
     }
