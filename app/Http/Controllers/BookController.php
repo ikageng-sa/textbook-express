@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\SalesListing;
 use App\Rules\ISBN;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -47,14 +48,14 @@ class BookController extends Controller
             ->with('status', $addedBook);
     }
 
-    public function show(Book $book)
+    public function show(SalesListing $book)
     {
 
-        $book = DB::table('books as b')
-            ->select('b.id', 'sl.id as slID', 'b.title', 'b.author', 'b.isbn', 'b.description', 'b.edition', 'b.category', 'b.cover', 'sl.price', 'sl.condition', 'sl.status')
-            ->join('sales_listings as sl', 'sl.book_id', '=', 'b.id')
-            ->where('b.id', '=', $book->id)
-            ->first();
+        $book = DB::table('sales_listings as sl')
+            ->select('b.id', 'sl.id as slID', 'b.title', 'b.author', 'b.isbn', 'b.description', 'b.edition', 'b.category', 'b.cover', 'sl.price', 'sl.condition', 'sl.status', 'b.quantity')
+            ->join('books as b', 'b.id', '=', 'sl.book_id')
+            ->where('sl.id', '=', $book->id)
+            ->first();        
 
         return view('books.show', [
             'book' => $book,

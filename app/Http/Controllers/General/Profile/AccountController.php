@@ -39,8 +39,14 @@ class AccountController extends Controller
     {
         $token = $request->route()->parameter('token');
 
-        return view('auth.passwords.reset')->with(
-            ['token' => $token, 'email' => $request->email ?? auth()->user()->email ]
-        );
+        return view('general.profile.account.password.reset')->with([
+            'token' => $token,
+        ]);
+    }
+
+    public function resetPassword(Request $request) {
+        $request->merge(['email' => auth()->user()->email]);
+
+        // TODO
     }
 }

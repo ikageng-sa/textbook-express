@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Enums\TransactionStatus;
 use App\Enums\SalesListingStatus;
+use App\Events\PurchaseSuccessful;
+use App\Models\Book;
 use App\Models\Order;
 use App\Models\SalesListing;
 use App\Models\Transaction;
@@ -18,15 +20,15 @@ class StripeController extends Controller
     {
 
       Stripe::setApiKey(config('stripe.default.key'));
-      
+
       $book = DB::table('books as b')
           ->select('b.id', 'sl.id as slID', 'b.title', 'b.author', 'b.isbn', 'b.description', 'b.edition', 'b.category', 'b.cover', 'sl.price', 'sl.condition', 'sl.status')
           ->join('sales_listings as sl', 'sl.book_id', '=', 'b.id')
-          ->where('b.id', '=', $book->id)
+          ->where('b.id', '=', $book->book_id)
           ->first();
 
       
-        // Create a new transaction
+        // Create a new transaction record
         $transaction = Transaction::create([
           'amount' => $book->price,
         ]);
@@ -38,7 +40,7 @@ class StripeController extends Controller
                 'product_data' => [
                   'name' => $book->title,
                 ],
-                'unit_amount' => (int) $book->price * 100,
+                'unit_amount' => $book->price * 100,
             ],
               'quantity' => 1,
         ]],
@@ -54,7 +56,7 @@ class StripeController extends Controller
         // Record the product order
         $order = Order::create([
           'transaction_id' => $transaction->id,
-          'item_id' => $book->id,
+          'item_id' => $book->slID,
         ]);
 
         return redirect($session->url);
@@ -73,14 +75,8 @@ class StripeController extends Controller
         'status' => TransactionStatus::PAID,
       ]);
 
-      $orders = Order::whereTransactionId($transaction->id)->get();
 
-      // Change the status of the items related to the transection id to sold
-      foreach( $orders as $order )
-      {
-        SalesListing::whereId($order->item_id)
-          ->update(['status' => SalesListingStatus::SOLD]);
-      }
+      PurchaseSuccessful::dispatch($transaction);      
 
       return view('general.checkout.success');
     }

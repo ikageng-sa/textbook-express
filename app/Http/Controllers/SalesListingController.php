@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\SalesListingStatus;
+use App\Events\BookListedSuccessfully;
 use App\Models\SalesListing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +15,7 @@ class SalesListingController extends Controller
     {
         // Convert price to boolean before validation
         $request->merge([
-            'price' => number_format($request->price, 2)
+            'price' => number_format($request->price, 2, '.', '')
         ]);
 
         $request->validate([
@@ -30,6 +31,10 @@ class SalesListingController extends Controller
             'seller' => auth()->user()->id,
         ]);
 
+        if($bookListed) {
+            BookListedSuccessfully::dispatch($bookListed);
+        } 
+
         return redirect()->to('/home')->with('status', 'Your book was successfully listed');
     }
 
@@ -40,11 +45,12 @@ class SalesListingController extends Controller
 
         if (!$query == '') {
             $books = DB::table('sales_listings as sl')
-                ->select('b.id', 'b.title', 'b.author', 'b.isbn', 'b.description', 'b.edition', 'b.category', 'b.cover', 'sl.seller', 'sl.price', 'sl.condition', 'sl.status')
+                ->select('sl.id', 'b.title', 'b.author', 'b.isbn', 'b.description', 'b.edition', 'b.category', 'b.cover', 'sl.seller', 'sl.price', 'sl.condition', 'sl.status')
                 ->join('books as b', 'b.id', '=', 'sl.book_id')
                 ->whereAny(['b.title', 'b.category', 'b.publisher', 'b.author', 'b.isbn'], 'like', "%$query%")
-                ->whereStatus(SalesListingStatus::AVAILABLE)
+                ->where('sl.status', '=', SalesListingStatus::AVAILABLE)
                 ->where('seller', '!=', auth()->user()->id)
+                ->where('b.reviewed_by', '!=', null)
                 ->get();
         }
         
