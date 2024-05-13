@@ -21,7 +21,6 @@ class AddToCart extends Component
 
             $cart = auth()->user()->cart;
 
-
         if (!$cart) {
             $cart = Transaction::create([
                 'user_id' => auth()->user()->id,
@@ -30,8 +29,7 @@ class AddToCart extends Component
             ]);
         }
 
-        $bookExistsInCart = $cart->items->whereIn('item_id', $this->book);
-
+        $bookExistsInCart = $cart->findItem('item_id', $this->book)->get(); //->whereIn('item_id', $this->book);
 
         if (count($bookExistsInCart) !== 0) {  
             session()->flash('alert', 'Already added to cart');        
