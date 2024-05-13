@@ -8,6 +8,7 @@ use App\Http\Controllers\General\Profile\AccountController;
 use App\Http\Controllers\General\Profile\AddressBookController;
 use App\Http\Controllers\General\ProfileController;
 use App\Http\Controllers\General\BookController;
+use App\Http\Controllers\General\CartController;
 use App\Http\Controllers\General\HomeController;
 use App\Http\Controllers\General\StripeController;
 use Illuminate\Support\Facades\Auth;
@@ -109,6 +110,8 @@ Route::middleware('auth')->group(function() {
     Route::post('/book', [BookController::class, 'store'])->name('book.store');
     Route::middleware('auth')->post('/list-book', [BookController::class, 'sell'])->name('general.book.sell');
 
+    Route::get('/cart', [CartController::class, 'index'])->name('general.cart.index');
+    
     Route::prefix('checkout')->group(function() {
         Route::post('/{book}', [StripeController::class, 'checkout'])->name('checkout');
         Route::get('/success/{transaction}', [StripeController::class, 'success'])->name('checkout.success');
