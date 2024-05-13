@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
@@ -47,4 +48,14 @@ class User extends Authenticatable
         'phone_number_verified_as' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * User has a cart associated with them
+     * 
+     * @return illuminate\Database\Eloquent\Relations\HasOne;
+     */
+    public function cart()  : HasOne
+    {
+        return $this->hasOne(Transaction::class, 'user_id')->whereStatus('cart');
+    }
 }
