@@ -19,11 +19,12 @@
 
     <style>
         a {
-            color: inherit;
             text-decoration: none;
         }
-
         
+        .hidden {
+            display: none;
+        } 
 
         .spinner {
             border: 4px solid rgba(0, 0, 0, 0.1);
@@ -56,10 +57,11 @@
                 </a>
                 @guest
                 @if (Route::has('login') && Route::has('register'))
-                <div class="ms-sm-0 ms-lg-5 mb-2">
+                <div class="ms-sm-0 ms-lg-5 mb-2 mobile hidden">
                     <a href="{{ route('start') }}" class="btn btn-success">Start Now</a>
                 </div>
-                @endif<div class="collapse navbar-collapse" id="navtoggle">
+                @endif
+                <div class="collapse navbar-collapse" id="navtoggle">
                     <ul class="navbar-nav mx-auto mb-2 mb-lg-0 col-md-6 d-flex justify-content-evenly">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{{route('welcome') }}">Home</a>
@@ -78,9 +80,14 @@
                         </div>
                     </form>
                 </div>
+                @if (Route::has('login') && Route::has('register'))
+                <div class="ms-sm-0 ms-lg-5 mb-2 desktop hidden">
+                    <a href="{{ route('start') }}" class="btn btn-success">Start Now</a>
+                </div>
+                @endif
                 @endguest
                 @auth
-                <div class="d-flex flex-row gap-3 align-items-center">
+                <div class="flex-row gap-3 align-items-center mobile hidden">
                     <livewire:cart.cart lazy />
                     <livewire:account lazy />
                 </div>
@@ -116,6 +123,10 @@
                         @endrole
                     </ul>
                 </div>
+                <div class="flex-row gap-3 align-items-center desktop hidden">
+                    <livewire:cart.cart lazy />
+                    <livewire:account lazy />
+                </div>
                 @endauth
             </div>
         </nav>
@@ -124,6 +135,25 @@
             @yield('content')
         </main>
     </div>
+
+    <script>
+    	var mobile = document.querySelector('.mobile');
+        var desktop = document.querySelector('.desktop');
+        
+        function adjustVisibility() {
+            if(window.innerWidth <= 992) {
+                mobile.style.display = "flex";
+                desktop.style.display = "none";
+            } else {
+                desktop.style.display = "flex";
+                mobile.style.display = "none";
+            }
+        }
+
+        adjustVisibility();
+        window.onresize = adjustVisibility();
+        
+    </script>
 </body>
 
 </html>
