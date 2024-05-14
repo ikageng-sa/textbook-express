@@ -20,10 +20,7 @@
         </div>
         <div class="d-flex flex-column gap-3 col-sm-100 col-md-6 col-lg-4">
             <livewire:cart.show lazy />
-            <form action="{{ route('checkout') }}" method="POST" class="col-12 d-flex justify-content-end my-0">
-                @csrf
-                <button type="submit" class="btn btn-secondary col-12" style="height:4rem;">Checkout</button>
-            </form>
+            <livewire:cart.cart-checkout-prompts />
         </div>
     </div>
 </div>
