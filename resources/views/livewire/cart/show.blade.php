@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col-12 d-flex justify-content-between">
                         <h3>R {{ $book->price }}</h3>
-                        <livewire:cart.remove-from-cart :book="$book->order">
+                        <livewire:cart.remove-from-cart :book="$book->order" lazy>
                     </div>
 
                 </div>
@@ -22,7 +22,7 @@
         </table>
     </div>
     @empty
-    <div class="card btn btn-outline-secondary p-3 d-flex justify-content-center align-items-center" style="min-height:5rem;">
+    <div class="card border-0 p-3 d-flex justify-content-center align-items-center" style="min-height:5rem;background-color:transparent;color:var(--color-dark);">
         <i class="bi bi-box2"></i>&nbsp;Your cart is empty
     </div>
     @endforelse

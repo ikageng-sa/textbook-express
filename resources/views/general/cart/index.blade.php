@@ -14,9 +14,16 @@
     </div>
 
     <div class="row d-flex align-items-center flex-column my-5" style="min-height:80vh;">
-        <h1 class="w-auto mb-5 text-center">Cart <i class="bi bi-cart"></i></h1>
+        <h1 class="w-auto text-center">Cart <i class="bi bi-cart"></i></h1>
+        <div class="row text-center mb-3">
+            <livewire:cart.total-cart-amount />
+        </div>
         <div class="d-flex flex-column gap-3 col-sm-100 col-md-6 col-lg-4">
             <livewire:cart.show lazy />
+            <form action="{{ route('checkout') }}" method="POST" class="col-12 d-flex justify-content-end my-0">
+                @csrf
+                <button type="submit" class="btn btn-secondary col-12" style="height:4rem;">Checkout</button>
+            </form>
         </div>
     </div>
 </div>

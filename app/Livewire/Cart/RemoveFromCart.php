@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Cart;
 
+use App\Events\CartChanged;
 use App\Models\Order;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -19,6 +20,10 @@ class RemoveFromCart extends Component
         session()->flash('alert', 'Added to cart');
         $this->dispatch('update-cart'); 
         $this->dispatch('show-alert');
+
+        CartChanged::dispatch(auth()->user());     
+
+        return;
     }
 
     public function render()

@@ -3,6 +3,7 @@
 namespace App\Livewire\Cart;
 
 use App\Enums\TransactionStatus;
+use App\Events\CartChanged;
 use App\Models\Order;
 use App\Models\Transaction;
 use Livewire\Component;
@@ -12,11 +13,11 @@ class AddToCart extends Component
 
     public $book;
     public $class= '';
+    public $style= '';
+    public $slot= '';
 
     public function add()
     {
-        $book = $this->book;        
-
         if(!auth()->user()) return redirect()->route('login');
 
             $cart = auth()->user()->cart;
@@ -44,6 +45,9 @@ class AddToCart extends Component
 
         session()->flash('alert', 'Added to cart');
         $this->dispatch('update-cart'); 
+
+        // Dispatch an event to update the total amount
+        CartChanged::dispatch(auth()->user());     
 
         return;
     }
