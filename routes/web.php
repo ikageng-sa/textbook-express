@@ -113,7 +113,8 @@ Route::middleware('auth')->group(function() {
     Route::get('/cart', [CartController::class, 'index'])->name('general.cart.index');
     
     Route::prefix('checkout')->group(function() {
-        Route::post('/{book}', [StripeController::class, 'checkout'])->name('checkout');
+        ROute::get('/', [StripeController::class, 'process'])->name('checkout');
+        Route::get('/stripe', [StripeController::class, 'checkout'])->name('checkout.stripe');
         Route::get('/success/{transaction}', [StripeController::class, 'success'])->name('checkout.success');
         Route::get('/cancel/{transaction}', [StripeController::class, 'cancel'])->name('checkout.cancel');
         Route::get('/webhook', [StripeController::class, 'webhook'])->name('checkout.webhook');
