@@ -18,6 +18,7 @@
 
     @if(count($books) !== 0)
     <div class="row row-gap">
+        <h2 class="mb-4">Showing results for "{{ $query }}"</h2>
         <div class="col-12 d-flex flex-wrap gap-2 row-gap-2 content">
             @foreach($books as $book)
             <x-book route="{{ route('general.book.show', ['book' => $book->id]) }}" :details="$book" />
