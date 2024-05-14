@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Events\BookListedSuccessfully;
+use App\Events\CartChanged;
 use App\Events\PurchaseSuccessful;
 use App\Listeners\AddToInventory;
+use App\Listeners\UpdateCartTotalPrice;
 use App\Listeners\UpdateInventory;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -27,6 +29,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         BookListedSuccessfully::class => [
             AddToInventory::class,
+        ],
+        CartChanged::class => [
+            UpdateCartTotalPrice::class,
         ]
     ];
 
