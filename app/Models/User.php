@@ -4,9 +4,9 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use illuminate\Database\Eloquent\Relations\HasOne;
@@ -58,5 +58,17 @@ class User extends Authenticatable
     public function cart()  : HasOne
     {
         return $this->hasOne(Transaction::class, 'user_id')->whereStatus('cart');
+    }
+
+    /**
+     * User has addresses associated with them
+     * 
+     * @return illuminate\Database\Eloquent\Relations\HasMany;
+     */
+    public function addresses()  : HasMany
+    {
+        return $this->hasMany(Address::class, 'user_id')
+            ->select('addresses.*', 'provinces.name as province')
+            ->join('provinces', 'provinces.id', 'addresses.province_id');
     }
 }
