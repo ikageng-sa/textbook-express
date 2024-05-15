@@ -36,7 +36,7 @@ class Transaction extends Model
             ->join('books', 'books.id', 'sales_listings.book_id');
     }
 
-    public function findItem($key = 'id', $value) {
+    public function findItem($value, $key = 'id') {
         return $this->hasOne(Order::class, 'transaction_id')->where($key, $value);
     }
 }

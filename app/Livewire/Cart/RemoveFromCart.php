@@ -14,7 +14,7 @@ class RemoveFromCart extends Component
     public function remove()
     {
 
-        $item = auth()->user()->cart->findItem('id', $this->book)->first()->forceDelete(); //->where('order', $this->book)->first();
+        $item = auth()->user()->cart->findItem($this->book)->first()->forceDelete(); //->where('order', $this->book)->first();
 
         session()->flash('alert', 'Item removed from cart');        
         session()->flash('alert', 'Added to cart');

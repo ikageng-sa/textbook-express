@@ -30,7 +30,7 @@ class AddToCart extends Component
             ]);
         }
 
-        $bookExistsInCart = $cart->findItem('item_id', $this->book)->get(); //->whereIn('item_id', $this->book);
+        $bookExistsInCart = $cart->findItem($this->book, 'item_id')->get(); //->whereIn('item_id', $this->book);
 
         if (count($bookExistsInCart) !== 0) {  
             session()->flash('alert', 'Already added to cart');        
