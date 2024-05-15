@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::table('books', function (Blueprint $table) {
             $table->softDeletes();
         });
-        Schema::table('orders', function (Blueprint $table) {
+        Schema::table('carts', function (Blueprint $table) {
             $table->softDeletes();
         });
         Schema::table('addresses', function (Blueprint $table) {
@@ -39,7 +39,7 @@ return new class extends Migration
         Schema::table('books', function (Blueprint $table) {
             $table->dropSoftDeletes();
         });
-        Schema::table('orders', function (Blueprint $table) {
+        Schema::table('carts', function (Blueprint $table) {
             $table->dropSoftDeletes();
         });
         Schema::table('addresses', function (Blueprint $table) {

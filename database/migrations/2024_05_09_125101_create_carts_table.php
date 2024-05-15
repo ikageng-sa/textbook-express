@@ -12,10 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('carts', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Transaction::class,'transaction_id')->nullable()->nullOnDelete();
-            $table->foreignId('item_id')->constrained('sales_listings', 'id')->cascadeOnDelete();
+            $table->foreignId('item_id')->constrained('sales_listings', 'id')->restrictOnDelete();
             $table->timestamps();
         });
     }

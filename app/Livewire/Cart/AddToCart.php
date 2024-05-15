@@ -4,7 +4,7 @@ namespace App\Livewire\Cart;
 
 use App\Enums\TransactionStatus;
 use App\Events\CartChanged;
-use App\Models\Order;
+use App\Models\Cart;
 use App\Models\Transaction;
 use Livewire\Component;
 
@@ -38,7 +38,7 @@ class AddToCart extends Component
             return;
         }
 
-        $order = Order::create([
+        $order = Cart::create([
             'transaction_id' => $cart->id,
             'item_id' => $this->book
         ]);
