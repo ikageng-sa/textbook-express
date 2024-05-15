@@ -114,6 +114,7 @@ Route::middleware('auth')->group(function() {
     
     Route::prefix('checkout')->group(function() {
         ROute::get('/', [StripeController::class, 'process'])->name('checkout');
+        ROute::get('/overview', [StripeController::class, 'overview'])->name('checkout.overview');
         Route::get('/stripe', [StripeController::class, 'checkout'])->name('checkout.stripe');
         Route::get('/success/{transaction}', [StripeController::class, 'success'])->name('checkout.success');
         Route::get('/cancel/{transaction}', [StripeController::class, 'cancel'])->name('checkout.cancel');
