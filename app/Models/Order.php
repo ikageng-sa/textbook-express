@@ -5,13 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DeliveryMethod extends Model
+class Order extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'method',
-        'description',
-        'cost'
+        'transaction_id',
+        'delivery_method_id',
+        'address_id',
+        'payment_method',
+        'status'
     ];
 }

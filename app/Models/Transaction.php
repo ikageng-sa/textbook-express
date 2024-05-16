@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Transaction extends Model
 {
     use HasFactory;
 
+    private $order;
     protected $fillable = [
         'user_id',
         'status',
@@ -36,7 +38,38 @@ class Transaction extends Model
             ->join('books', 'books.id', 'sales_listings.book_id');
     }
 
-    public function findItem($value, $key = 'id') {
+    /**
+     * Find item associated with the transaction
+     * 
+     * @return Illuminate\Database\Eloquent\Relations\HasOne;
+     */
+    public function findItem($value, $key = 'id') : HasOne
+    {
         return $this->hasOne(Cart::class, 'transaction_id')->where($key, $value);
     }
+
+    /**
+     * Transaction record a order record associated with it
+     * 
+     * @return Illuminate\Database\Eloquent\Relations\HasOne;
+     */
+    public function order() : HasOne
+    {
+        return $this->hasOne(Order::class, 'transaction_id');
+    }
+
+    /**
+     * Transaction record a order record associated with it
+     * 
+     * @return Illuminate\Database\Eloquent\Relations\HasOne;
+     */
+    public function orderWithDetails() : HasOne
+    {
+        return $this->hasOne(Order::class, 'transaction_id')
+        ->select('addresses.*', 'delivery_methods.*', 'provinces.name as province')
+        ->join('addresses', 'addresses.id', 'orders.address_id')
+        ->join('delivery_methods', 'delivery_methods.id', 'orders.delivery_method_id')
+        ->join('provinces', 'provinces.id', 'addresses.province_id');
+    }
+
 }
