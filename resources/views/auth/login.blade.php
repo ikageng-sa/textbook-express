@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container">
-    <div class="row">
-        <div class="col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center">
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-6 col-lg-4">
             <div class="card col-12">
                 <div class="card-body">
                     <h1 class="display-5 fs-4">{{ __('Login') }}</h1>

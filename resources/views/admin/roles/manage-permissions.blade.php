@@ -24,7 +24,7 @@
                         <x-input-error name="permission" :message="$errors->first('permission')" />
                         <div class="row">
                             <x-input-label for="name">{{ __('Permissions') }}</x-input-label>
-                            <div class="row mb-3">
+                            <div class="row flex-wrap mb-3">
                                 @forelse($permissions as $permission)
                                 <div class="col-4">
                                     <input class="form-check-input" 

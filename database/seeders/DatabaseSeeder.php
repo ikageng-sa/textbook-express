@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             UserSeeder::class,
             ProvinceSeeder::class,
+            DeliveryMethodSeeder::class
         ]);
 
         $role = Role::findByName('super-admin');

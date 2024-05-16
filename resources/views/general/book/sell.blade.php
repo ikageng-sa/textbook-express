@@ -6,7 +6,7 @@
     <div class="row justify-content-center align-items-center">
         <h1 class="display-flex fs-5 text-sm-start text-md-center">Find the book you would like to sell</h1>
         <p class="fs-sm py-0 mt-0 mb-3 text-sm-start text-md-center">Request the book to be added if you can't find it</p>
-        <form action="{{ route('salesListing.store') }}" method="POST" class="col-sm-12 col-md-6">
+        <form action="{{ route('general.book.sell') }}" method="POST" class="col-sm-12 col-md-6">
             @csrf
             <div class="row">
                 <livewire:books.autocomplete-search />

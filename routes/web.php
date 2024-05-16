@@ -7,9 +7,10 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\General\Profile\AccountController;
 use App\Http\Controllers\General\Profile\AddressBookController;
 use App\Http\Controllers\General\ProfileController;
-use App\Http\Controllers\BookController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\SalesListingController;
+use App\Http\Controllers\General\BookController;
+use App\Http\Controllers\General\CartController;
+use App\Http\Controllers\General\HomeController;
+use App\Http\Controllers\General\StripeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -88,7 +89,8 @@ Route::middleware('auth')->prefix('/profile')->group(function() {
         ->name('index', 'general.profile.account.index')
         ->name('update', 'general.profile.account.update')
         ->except(['create', 'store', 'edit', 'show', 'destroy']);
-    Route::get('/profile/account/password-reset', [AccountController::class, 'showResetForm'])->name('general.account.password.reset');
+    Route::get('/account/password-reset', [AccountController::class, 'showResetForm'])->name('general.account.password.reset');
+    Route::post('/account/password/reset', [AccountController::class, 'resetPassword'])->name('general.account.password.update');
 
     Route::resource('addresses', AddressBookController::class)
         ->name('index', 'general.profile.addresses.index')
@@ -97,16 +99,28 @@ Route::middleware('auth')->prefix('/profile')->group(function() {
         ->name('store', 'general.profile.addresses.store')
         ->name('edit', 'general.profile.addresses.edit')
         ->except(['show']);
-    Route::get('profile/addresses/{address}/delete', [AddressBookController::class, 'destroy'])
+    Route::get('/addresses/{address}/delete', [AddressBookController::class, 'destroy'])
         ->name('general.profile.addresses.destroy');
 
-
-    Route::get('/sell-a-book', [HomeController::class, 'sell'])->name('sell');
-    Route::get('/new-book', [BookController::class, 'create'])->name('book.create');
-    Route::post('/book', [BookController::class, 'store'])->name('book.store');
-    Route::middleware('auth')->post('/list-book', [SalesListingController::class, 'store'])->name('salesListing.store');
 });
 
+Route::middleware('auth')->group(function() {
+    Route::get('/sell-a-book', [BookController::class, 'showSellForm'])->name('general.book.show-sell-form');
+    Route::get('/new-book', [BookController::class, 'create'])->name('book.create');
+    Route::post('/book', [BookController::class, 'store'])->name('book.store');
+    Route::middleware('auth')->post('/list-book', [BookController::class, 'sell'])->name('general.book.sell');
+
+    Route::get('/cart', [CartController::class, 'index'])->name('general.cart.index');
+    
+    Route::prefix('checkout')->group(function() {
+        ROute::get('/', [StripeController::class, 'process'])->name('checkout');
+        ROute::get('/overview', [StripeController::class, 'overview'])->name('checkout.overview');
+        Route::get('/stripe', [StripeController::class, 'checkout'])->name('checkout.stripe');
+        Route::get('/success/{transaction}', [StripeController::class, 'success'])->name('checkout.success');
+        Route::get('/cancel/{transaction}', [StripeController::class, 'cancel'])->name('checkout.cancel');
+        Route::get('/webhook', [StripeController::class, 'webhook'])->name('checkout.webhook');
+    });
+});
 
 Route::middleware('guest')->group(function() {
     Route::get('/', function () {
@@ -119,8 +133,8 @@ Route::middleware('guest')->group(function() {
 
 
 // HomeController
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/search', [SalesListingController::class, 'search'])->name('search');
-Route::get('book/show/{book}', [BookController::class, 'show'])->name('book.show');
+Route::get('/home', [HomeController::class, 'index'])->name('general.home');
+Route::get('/search', [BookController::class, 'search'])->name('general.book.search');
+Route::get('book/show/{book}', [BookController::class, 'show'])->name('general.book.show');
 
 
