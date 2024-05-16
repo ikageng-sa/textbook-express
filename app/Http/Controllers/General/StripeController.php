@@ -5,6 +5,7 @@ namespace App\Http\Controllers\General;
 use App\Enums\TransactionStatus;
 use App\Events\PurchaseSuccessful;
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\Order;
 use App\Models\SalesListing;
 use App\Models\Transaction;
@@ -14,87 +15,119 @@ use Stripe\Stripe;
 
 class StripeController extends Controller
 {
-    public function checkout(SalesListing $book) 
-    {
 
-      Stripe::setApiKey(config('stripe.default.key'));
+  public function process()
+  {
+    $user = auth()->user();
 
-      $book = DB::table('books as b')
-          ->select('b.id', 'sl.id as slID', 'b.title', 'b.author', 'b.isbn', 'b.description', 'b.edition', 'b.category', 'b.cover', 'sl.price', 'sl.condition', 'sl.status')
-          ->join('sales_listings as sl', 'sl.book_id', '=', 'b.id')
-          ->where('b.id', '=', $book->book_id)
-          ->first();
+    // Redirect back if user doesn't have a cart
+    if (!$user->cart || $user->cart->items->count() == 0)
+      return redirect('/cart');
 
-      
-        // Create a new transaction record
-        $transaction = Transaction::create([
-          'amount' => $book->price,
-        ]);
-
-        $session =  Session::create([
-            'line_items' => [[
-              'price_data' => [
-                'currency' => 'zar',
-                'product_data' => [
-                  'name' => $book->title,
-                ],
-                'unit_amount' => $book->price * 100,
-            ],
-              'quantity' => 1,
-        ]],
-            'mode' => 'payment',
-            'success_url' => route('checkout.success', ['transaction' => $transaction->id]),
-            'cancel_url' => route('checkout.cancel', ['transaction' => $transaction->id]),
-        ]);
-
-        $transaction->update([
-          'session' => $session->id,
-        ]);
-
-        // Record the product order
-        $order = Order::create([
-          'transaction_id' => $transaction->id,
-          'item_id' => $book->slID,
-        ]);
-
-        return redirect($session->url);
-            
-    }
-
-    public function success(Transaction $transaction) 
-    {
-
-      // Verify that the page wasn't visited before concerning the same transaction
-      if($transaction->status == TransactionStatus::PAID->value){
-        abort(419);
-      }
-
-      $transaction->update([
-        'status' => TransactionStatus::PAID,
+    // Create a new cart if user has a cart no order record
+    if (!$user->cart->order) {
+      $order = Order::create([
+        'transaction_id' => $user->cart->id,
       ]);
+    };
 
+    return view('general.checkout.process');
+  }
 
-      PurchaseSuccessful::dispatch($transaction);      
+  public function overview()
+  {
+    $user = auth()->user();
 
-      return view('general.checkout.success');
+    $order = $user->cart->orderWithDetails;
+
+    return view('general.checkout.overview', [
+      'cart_amount' => $user->cart->amount,
+      'order' => $order,
+    ]);
+  }
+
+  public function checkout()
+  {
+    Stripe::setApiKey(config('stripe.default.key'));
+
+    $products = [];
+    $user = auth()->user();
+    $cart = $user->cart;
+    $order = $user->cart->orderWithDetails;
+
+    foreach ($cart->items as $book) {
+      $products[] = [
+        'price_data' => [
+          'currency' => 'zar',
+          'product_data' => [
+            'name' => $book->title . ' ' . ($book->edition),
+          ],
+          'unit_amount' => $book->price * 100,
+        ],
+        'quantity' => 1,
+      ];
     }
 
-    public function cancel(Transaction $transaction) 
-    {
-      // Verify if page was visited before
-      if($transaction->status == TransactionStatus::CANCELLED->value){
-        abort(419);
-      }
+    $products = array_merge(
+      $products,
+      [[
+        'price_data' => [
+          'currency' => 'zar',
+          'product_data' => [
+            'name' => $order->method,
+          ],
+          'unit_amount' => $order->cost * 100,
+        ],
+        'quantity' => 1,
+      ]]
+    );
+  
+    $session =  Session::create([
+      'line_items' => $products,
+      'mode' => 'payment',
+      'success_url' => route('checkout.success', ['transaction' => $user->cart]),
+      'cancel_url' => route('checkout.cancel', ['transaction' => $user->cart]),
+    ]);
 
-      $transaction->update([
-        'status' => TransactionStatus::CANCELLED,
-      ]);
+    $cart->session = $session->id;
+    $cart->save();
 
-      return view('general.checkout.cancel');
+    return redirect($session->url);
+  }
+
+  public function success(Transaction $transaction)
+  {
+    // Verify that the page wasn't visited before concerning the same transaction
+    // if ($transaction->status == TransactionStatus::PAID->value) {
+    //   abort(419);
+    // }
+
+    $transaction->status = TransactionStatus::PAID;
+    $transaction->save();
+
+    PurchaseSuccessful::dispatch($transaction);
+
+    return view('general.checkout.success');
+  }
+
+  public function cancel(Transaction $transaction)
+  {
+    // Verify if page was visited before
+    if ($transaction->status == TransactionStatus::CANCELLED->value) {
+      abort(419);
     }
 
-    public function webhook()
-    {
-      // TODO
-    }
+    $transaction->update([
+      'status' => TransactionStatus::CANCELLED,
+    ]);
+
+    $transaction->order->delete();
+
+    return view('general.checkout.cancel');
+  }
+
+  public function webhook()
+  {
+    // TODO
+  }
 }

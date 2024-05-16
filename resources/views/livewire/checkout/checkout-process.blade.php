@@ -1,12 +1,12 @@
 <div class="">
-    <div class="row align-items-center flex-row flex-column my-5" style="min-height:80vh;">
-        @if(!$delivery && !$pickup )
+    <div class="row align-items-center flex-row flex-column my-5" >
+        @if($step === 'delivery-method' )
         <div wire:transition.out.opacity>
             <h1 class="w-auto mb-5 text-center">Delivery Method</h1>
             <div class="d-flex flex-column gap-3 col-sm-100 col-md-6 col-lg-4">
                 <div class="d-flex flex-column gap-1">
                     @forelse($methods as $method)
-                    <button wire:click="$set('delivery', true)" type="button" class="card text-start border border-dark p-3 flex-row align-items-center icon-link icon-link-hover " style="height:5rem;" style="--bs-icon-link-transform: translate3d(.125rem, 0, 0); --bs-link-hover-color-rgb: 255, 0, 0;">
+                    <button wire:click="setDeliveryMethod({{ $method->id }})" type="button" class="card text-start border border-dark p-3 flex-row align-items-center icon-link icon-link-hover " style="height:5rem;" style="--bs-icon-link-transform: translate3d(.125rem, 0, 0); --bs-link-hover-color-rgb: 255, 0, 0;">
                         <div>
                             <h2 class="text-secondary my-0">{{ $method->method }}</h2>
                             <p class="fs-sm fw-light my-0">{{ $method->description }}</p>
@@ -25,13 +25,13 @@
         </div>
         @endif
 
-        @if($delivery === true )
+        @if($step === 'delivery-address' )
         <div wire:transition.in.opacity.duration.200ms>
             <h1 class="w-auto mb-5 text-center">Delivery Address</h1>
             <div class="d-flex flex-column gap-3 col-sm-100 col-md-6 col-lg-4">
                 <div class="d-flex flex-column gap-1">
                     @forelse($addresses as $address)
-                    <button wire:click="setAddress(1)" type="button" class="card p-3 text-start" style="min-height:5rem;">
+                    <button wire:click="setAddress({{ $address->id }})" type="button" class="card p-3 text-start" style="min-height:5rem;">
                         <div class="col-12 d-flex justify-content-between">
                             <h3 class="fs-sm text-secondary">{{ $address->name }}</h3>
                         </div>
@@ -47,20 +47,21 @@
         </div>
         @endif
 
-        @if($address === true )
+        @if($step === 'payment-method' )
         <div wire:transition.in.opacity.duration.200ms>
             <h1 class="w-auto mb-5 text-center">Payment Method</h1>
             <div class="d-flex flex-column gap-3 col-sm-100 col-md-6 col-lg-4">
                 <div class="d-flex flex-column gap-1">
-                    <a href="{{ route('checkout.stripe') }}" class="card text-start border border-dark p-3 flex-row align-items-center icon-link icon-link-hover " style="height:5rem;" style="--bs-icon-link-transform: translate3d(.125rem, 0, 0); --bs-link-hover-color-rgb: 255, 0, 0;">
-                        <h2 class="bi bi-stripe my-0 me-1"></h2>
+                    <button wire:click="setPaymentMethod('credit/debit card')" type="button" class="card text-start p-3 flex-row align-items-center" style="min-height:5rem;">
+                        <h2 class="bi bi-credit-card my-0 me-2"></h2>
                         <div class="">
-                            <h2 class="text-secondary my-0">Stripe</h2>
+                            <h2 class="text-secondary my-0">Credit/Debit Card</h2>
                         </div>
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
         @endif
+
     </div>
 </div>
