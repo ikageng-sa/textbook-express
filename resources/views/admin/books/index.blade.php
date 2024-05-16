@@ -11,7 +11,7 @@
                         <div class="col-12">
                             <form action="{{ route('admin.books.search') }}" method="get">
                                 <div class="row mb-3">
-                                    <div class="col-4">
+                                    <div class="col-12">
                                         <div class="">
                                             <input class="form-control form-control-sm" type="text" name="text" value="{{ old('text') }}" placeholder="Enter a title, isbn, author ...">
                                         </div>
@@ -74,11 +74,11 @@
                         <th scope="col">Cover</th>
                         <th scope="col">Title</th>
                         <th scope="col">Author(s)</th>
-                        <th scope="col">Edition</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Language</th>
-                        <th scope="col">Added By</th>
-                        <th scope="col">Reviewed By</th>
+                        <th class="desktop hidden" scope="col">Edition</th>
+                        <th class="desktop hidden" scope="col">Category</th>
+                        <th class="desktop hidden" scope="col">Language</th>
+                        <th class="desktop hidden" scope="col">Added By</th>
+                        <th class="desktop hidden" scope="col">Reviewed By</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -91,11 +91,11 @@
                         <th><img src="{{ isset($book->cover) ? '/'.$book->cover : '/images/no_image.png' }}" alt="" style="height:3rem;width:2rem;"></th>
                         <td>{{ $book->title }}</td>
                         <td>{{ $book->author }}</td>
-                        <td>{{ $book->edition ?? '-' }}</td>
-                        <td>{{ $book->category ?? '-' }}</td>
-                        <td>{{ $book->language ?? '-' }}</td>
-                        <td>{{ $book->adder ?? '-' }}</td>
-                        <td>{{ $book->reviewer ?? '-' }}</td>
+                        <td class="desktop hidden">{{ $book->edition ?? '-' }}</td>
+                        <td class="desktop hidden">{{ $book->category ?? '-' }}</td>
+                        <td class="desktop hidden">{{ $book->language ?? '-' }}</td>
+                        <td class="desktop hidden">{{ $book->adder ?? '-' }}</td>
+                        <td class="desktop hidden">{{ $book->reviewer ?? '-' }}</td>
                         @can('update book')
                         <td><a href="{{ route('admin.books.edit',['book' => $book->id]) }}" class="btn btn-sm btn-outline-success"><span class="bi bi-pen"></span></a>
                             @endcan

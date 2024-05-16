@@ -68,14 +68,14 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">No.</th>
+                                <th class="desktop hidden" scope="col">No.</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Email</th>
-                                <th scope="col">Role(s)</th>
-                                <th scope="col" class="center-text">Email Verified</th>
-                                <th scope="col">Account Status</th>
-                                <th scope="col">Date Created</th>
-                                <th></th>
+                                <th  scope="col">Role(s)</th>
+                                <th class="desktop hidden" scope="col" class="center-text">Email Verified</th>
+                                <th class="desktop hidden" scope="col">Account Status</th>
+                                <th class="desktop hidden" scope="col">Date Created</th>
+                                <th class="desktop hidden"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -83,20 +83,20 @@
                             @forelse($users as $user)
                             @php $n++ @endphp
                             <tr>
-                                <th scope="row">{{ $n }}</th>
+                                <th class="desktop hidden" scope="row">{{ $n }}</th>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td class="d-flex gap-1">
                                     @forelse($user->getRoleNames() as $role)
                                     <span class="badge bg-primary">{{ $role }}</span>
                                     @empty
-                                    -
+                                    <span class="badge bg-primary">user</span>
                                     @endforelse
                                 </td>
-                                <td class="center-text">@isset($user->email_verified_at) <span class="text-success bi bi-check-all"></span> @else <span class="text-danger bi bi-x-lg"></span> @endisset</td>
-                                <td>{{ ucfirst($user->status) ?? '-' }}</td>
-                                <td>{{ $user->created_at ?? '-' }}</td>
-                                <td class="d-flex gap-2">
+                                <td class="desktop hidden" class="center-text">@isset($user->email_verified_at) <span class="text-success bi bi-check-all"></span> @else <span class="text-danger bi bi-x-lg"></span> @endisset</td>
+                                <td class="desktop hidden">{{ ucfirst($user->status) ?? '-' }}</td>
+                                <td class="desktop hidden">{{ $user->created_at ?? '-' }}</td>
+                                <td class="desktop hidden gap-2">
                                     @if (auth()->user()->hasRole('super-admin'))
                                     <a href="{{ route('admin.users.edit', ['user' => $user->id]) }}" class="btn btn-sm btn-secondary"><span class="bi bi-pen"></span></a>
                                     @elseif (auth()->user()->id === $user->id || (auth()->user()->hasRole('admin') && !$user->hasRole('admin')))
