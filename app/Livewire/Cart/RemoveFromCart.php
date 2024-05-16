@@ -14,14 +14,15 @@ class RemoveFromCart extends Component
     public function remove()
     {
 
-        $item = auth()->user()->cart->findItem($this->book)->first()->forceDelete(); //->where('order', $this->book)->first();
+        $cart = auth()->user()->cart;
+        $cart->findItem($this->book)->first()->forceDelete(); //->where('order', $this->book)->first();
 
         session()->flash('alert', 'Item removed from cart');        
         session()->flash('alert', 'Added to cart');
         $this->dispatch('update-cart'); 
         $this->dispatch('show-alert');
 
-        CartChanged::dispatch(auth()->user());     
+        CartChanged::dispatch($cart);     
 
         return;
     }

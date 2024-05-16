@@ -20,13 +20,12 @@ class AddToCart extends Component
     {
         if(!auth()->user()) return redirect()->route('login');
 
-            $cart = auth()->user()->cart;
-
+            $user = auth()->user();
+            $cart = $user->cart;
         if (!$cart) {
             $cart = Transaction::create([
                 'user_id' => auth()->user()->id,
                 'status' => TransactionStatus::CART,
-                'amount' => 0
             ]);
         }
 
@@ -43,11 +42,11 @@ class AddToCart extends Component
             'item_id' => $this->book
         ]);
 
+        // Dispatch an event to update the total amount
+        CartChanged::dispatch($cart);  
+
         session()->flash('alert', 'Added to cart');
         $this->dispatch('update-cart'); 
-
-        // Dispatch an event to update the total amount
-        CartChanged::dispatch(auth()->user());     
 
         return;
     }

@@ -22,7 +22,7 @@ class TotalCartAmount extends Component
             ]);
         }
 
-        $amount = $user->cart->amount;
+        $amount = $user->cart->amount ?? 0.00;
 
         return view('livewire.cart.total-cart-amount', [
             'amount' => $amount,
