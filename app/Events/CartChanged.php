@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -15,12 +16,12 @@ class CartChanged
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $user;
+    public $cart;
     /**
      * Create a new event instance.
      */
-    public function __construct(User $user)
+    public function __construct(Transaction $cart)
     {
-        $this->user = $user;
+        $this->cart = $cart;
     }
 }

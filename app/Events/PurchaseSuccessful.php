@@ -4,7 +4,7 @@ namespace App\Events;
 
 use App\Enums\SalesListingStatus;
 use App\Models\Book;
-use App\Models\Order;
+use App\Models\Cart as Cart;
 use App\Models\SalesListing;
 use App\Models\Transaction;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -22,9 +22,7 @@ class PurchaseSuccessful
      */
     public function __construct(Transaction $transaction)
     {
-
-
-        $orders = Order::whereTransactionId($transaction->id)->get('item_id');
+        $orders = Cart::whereTransactionId($transaction->id)->get('item_id');
 
         // Initialize listings
         $listings = SalesListing::whereIn('id', $orders);

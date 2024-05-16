@@ -12,9 +12,9 @@ class UpdateCartTotalPrice
      */
     public function handle(object $event): void
     {
-        $user = $event->user;
-        $total_amount = $user->cart->items->pluck('price')->sum();
-        $user->cart->amount = $total_amount;
-        $user->cart->save();
+        $cart = $event->cart;
+        $total_amount = $cart->items->pluck('price')->sum();
+        $cart->amount = $total_amount;
+        $cart->save();
     }
 }
